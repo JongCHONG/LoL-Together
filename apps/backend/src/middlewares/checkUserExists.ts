@@ -12,7 +12,7 @@ export const checkUserExists = async (
     if (!email || !summoner_name) {
       res
         .status(400)
-        .json({ message: "Email et summoner_name sont requis." });
+        .json({ message: "Email and summoner_name are required." });
       return;
     }
 
@@ -23,7 +23,7 @@ export const checkUserExists = async (
     if (existingUser) {
       res
         .status(409)
-        .json({ message: "Email ou summoner_name déjà utilisé." });
+        .json({ message: "Email or summoner_name already in use." });
       return;
     }
 

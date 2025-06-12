@@ -16,7 +16,7 @@ app.use(cors());
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
-app.use("api/teams", teamRoutes)
+app.use("/api/teams", teamRoutes)
 
 
 const PORT = process.env.PORT || 4000;

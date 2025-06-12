@@ -2,7 +2,7 @@ import mongoose, { Document, Schema, Types } from "mongoose";
 
 export interface ITeam extends Document {
   leader_id: string;
-  name?: string;
+  name: string;
   logo?: string;
   rank?: string;
   languages?: string[];
@@ -17,7 +17,7 @@ export interface ITeam extends Document {
 const TeamSchema = new Schema<ITeam>(
   {
     leader_id: { type: String, required: true },
-    name: { type: String },
+    name: { type: String, required: true, unique: true },
     logo: { type: String },
     rank: { type: String },
     languages: [{ type: String }],
