@@ -10,26 +10,61 @@ export const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-export const createUser = async (
-  req: Request,
-  res: Response
-): Promise<Response | void> => {
+export const getUserById = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+
   try {
-    const { username, password, email, summoner_name } = req.body;
-    if (!username || !password || !email || !summoner_name) {
-      return res
-        .status(400)
-        .json({ message: "Champs obligatoires manquants." });
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
     }
-
-    const user = new User(req.body);
-    await user.save();
-
-    res.status(201).json(user);
+    res.status(200).json(user);
   } catch (error: any) {
-    if (error.code === 11000) {
-      return res.status(409).json({ message: "Utilisateur déjà existant." });
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const updateUser = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const updateData = req.body;
+
+  if (updateData.password) {
+    return res.status(400).json({
+      message: "Password cannot be updated through this endpoint.",
+    });
+  }
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+      runValidators: true,
+      context: "query",
+    }).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
     }
-    res.status(500).json({ message: error.message });
+
+    res
+      .status(200)
+      .json({ message: "Update User sucesscfully", user: updatedUser });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  try {
+    const deletedUser =
+      await User.findByIdAndDelete(userId).select("-password");
+    if (!deletedUser) {
+      return res.status(404).json({ message: "Utilisateur non trouvé." });
+    }
+    res
+      .status(200)
+      .json({ message: "User deleted", user: deletedUser });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
 };

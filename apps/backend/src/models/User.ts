@@ -1,8 +1,6 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
 
-// 1. Interface TypeScript
 export interface IUser extends Document {
-  username: string;
   password: string;
   email: string;
   summoner_name: string;
@@ -19,10 +17,8 @@ export interface IUser extends Document {
   teams?: Types.ObjectId[];
 }
 
-// 2. Schéma Mongoose (reprend ton schéma)
 const UserSchema = new Schema<IUser>(
   {
-    username: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     email: { type: String, unique: true, required: true },
     summoner_name: { type: String, required: true, unique: true },
@@ -41,41 +37,41 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-UserSchema.post("save", async (user) => {
-  await mongoose
-    .model("Announcement")
-    .findOneAndUpdate(
-      { _id: user.announcements },
-      { $push: { users: user._id } }
-    );
-  await mongoose
-    .model("Conversation")
-    .findOneAndUpdate(
-      { _id: user.conversations },
-      { $push: { users: user._id } }
-    );
-  await mongoose
-    .model("Team")
-    .findOneAndUpdate({ _id: user.teams }, { $push: { users: user._id } });
-});
+// UserSchema.post("save", async (user) => {
+//   await mongoose
+//     .model("Announcement")
+//     .findOneAndUpdate(
+//       { _id: user.announcements },
+//       { $push: { users: user._id } }
+//     );
+//   await mongoose
+//     .model("Conversation")
+//     .findOneAndUpdate(
+//       { _id: user.conversations },
+//       { $push: { users: user._id } }
+//     );
+//   await mongoose
+//     .model("Team")
+//     .findOneAndUpdate({ _id: user.teams }, { $push: { users: user._id } });
+// });
 
-UserSchema.post("findOneAndDelete", async (user) => {
-  await mongoose
-    .model("Announcement")
-    .findOneAndUpdate(
-      { _id: user.announcements },
-      { $pull: { users: user._id } }
-    );
-  await mongoose
-    .model("Conversation")
-    .findOneAndUpdate(
-      { _id: user.conversations },
-      { $pull: { users: user._id } }
-    );
-  await mongoose
-    .model("Team")
-    .findOneAndUpdate({ _id: user.teams }, { $pull: { users: user._id } });
-});
+// UserSchema.post("findOneAndDelete", async (user) => {
+//   await mongoose
+//     .model("Announcement")
+//     .findOneAndUpdate(
+//       { _id: user.announcements },
+//       { $pull: { users: user._id } }
+//     );
+//   await mongoose
+//     .model("Conversation")
+//     .findOneAndUpdate(
+//       { _id: user.conversations },
+//       { $pull: { users: user._id } }
+//     );
+//   await mongoose
+//     .model("Team")
+//     .findOneAndUpdate({ _id: user.teams }, { $pull: { users: user._id } });
+// });
 
 const User = mongoose.model("User", UserSchema);
 
