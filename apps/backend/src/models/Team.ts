@@ -35,42 +35,20 @@ TeamSchema.post("save", async (team: ITeam) => {
   await mongoose
     .model("User")
     .findOneAndUpdate(
-      { _id: { $in: team.users } },
+      { _id: { $in: team.leader_id } },
       { $push: { teams: team._id } }
     );
+  console.log(`Team ${team._id} added to leader ${team.leader_id}.`);
 });
 
-// TeamSchema.post("findOneAndDelete", async (team: ITeam) => {
-//   await mongoose
-//     .model("User")
-//     .findOneAndUpdate(
-//       { _id: { $in: team.users } },
-//       { $pull: { teams: team._id } }
-//     );
-// });
-
-TeamSchema.pre("findOneAndUpdate", async function () {
-  // const upToDateUsers = this.getUpdate().users
-  // const teamId = this.getQuery()._id
-  // const team = await mongoose.model('Team').findById(teamId)
-  // const currentUsers = team.users.map(u => u.toString())
-  // console.log("upToDateUsers", upToDateUsers)
-  // console.log("currentUsers", currentUsers)
-  // const differenceAdd = lodash.difference(upToDateUsers, currentUsers)
-  // // console.log("differenceAdd", differenceAdd)
-  // const differenceRemove = lodash.difference(currentUsers, upToDateUsers)
-  // console.log("differenceRemove", differenceRemove)
-  // if (differenceAdd.length === 1) {
-  //     await mongoose.model('User').findOneAndUpdate(
-  //         { _id: differenceAdd},
-  //         { $push: { teams : team.id } }
-  //     )
-  // } else {
-  //     await mongoose.model('User').findOneAndUpdate(
-  //         { _id: differenceRemove},
-  //         { $pull: { teams : team.id } }
-  //     )
-  // }
+TeamSchema.post("findOneAndDelete", async (team: ITeam) => {
+  const result = await mongoose
+    .model("User")
+    .updateMany(
+      { teams: team._id },
+      { $pull: { teams: team._id } }
+    );
+  console.log(`Team ${team._id} removed from ${result.modifiedCount} user(s).`);
 });
 
 const Team = mongoose.model<ITeam>("Team", TeamSchema);

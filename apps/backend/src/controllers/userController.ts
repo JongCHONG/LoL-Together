@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import User from "../models/User";
+
+import userService from "../services/userService";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
-    const users = await User.find();
+    const users = await userService.getUsers();
     res.status(200).json(users);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -14,7 +15,7 @@ export const getUserById = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   try {
-    const user = await User.findById(userId).select("-password");
+    const user = await userService.getUserById(userId)
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
@@ -35,11 +36,7 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 
   try {
-    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
-      new: true,
-      runValidators: true,
-      context: "query",
-    }).select("-password");
+    const updatedUser = await userService.updateUser(userId, updateData);
 
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
@@ -56,14 +53,13 @@ export const updateUser = async (req: Request, res: Response) => {
 export const deleteUser = async (req: Request, res: Response) => {
   const { userId } = req.params;
   try {
-    const deletedUser =
-      await User.findByIdAndDelete(userId).select("-password");
+    const deletedUser = await userService.deleteUser(userId);
     if (!deletedUser) {
       return res.status(404).json({ message: "Utilisateur non trouvé." });
     }
     res
       .status(200)
-      .json({ message: "User deleted", user: deletedUser });
+      .json({ message: "User deleted" });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

@@ -14,6 +14,6 @@ router.get("/list", getTeams);
 router.get("/:teamId", getTeams as RequestHandler);
 router.post("/create", checkTeamExists, createTeam as RequestHandler);
 router.put("/:teamId", checkTeamExists, updateTeam as RequestHandler);
-router.delete("/:teamId", deleteTeam as RequestHandler); // Assuming deleteTeam is implemented similarly
+router.delete("/:teamId", deleteTeam as RequestHandler);
 
 export default router;

@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import Team from "../models/Team";
+
+import teamService from "../services/teamService";
 
 export const getTeams = async (req: Request, res: Response) => {
   try {
-    const teams = await Team.find();
+    const teams = await teamService.getTeams();
     res.status(200).json(teams);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -14,9 +15,7 @@ export const getTeamById = async (req: Request, res: Response) => {
   const { teamId } = req.params;
 
   try {
-    const team = await Team.findById(teamId);
-    // .populate("users", "-password")
-    // .populate("announcements");
+    const team = await teamService.getTeamById(teamId);
     if (!team) {
       return res.status(404).json({ message: "Team not found." });
     }
@@ -30,10 +29,7 @@ export const createTeam = async (req: Request, res: Response) => {
   const { leader_id, name } = req.body;
 
   try {
-    const team = new Team({
-      leader_id,
-      name,
-    });
+    const team = await teamService.createTeam(leader_id, name);
 
     await team.save();
     res.status(201).json({ message: "Team created successfully", team });
@@ -47,11 +43,7 @@ export const updateTeam = async (req: Request, res: Response) => {
   const updateData = req.body;
 
   try {
-    const updatedTeam = await Team.findByIdAndUpdate(teamId, updateData, {
-      new: true,
-      runValidators: true,
-      context: "query",
-    });
+    const updatedTeam = await teamService.updateTeam(teamId, updateData);
 
     if (!updatedTeam) {
       return res.status(404).json({ message: "Team not found" });
@@ -68,7 +60,7 @@ export const updateTeam = async (req: Request, res: Response) => {
 export const deleteTeam = async (req: Request, res: Response) => {
   const { teamId } = req.params;
   try {
-    const deletedTeam = await Team.findByIdAndDelete(teamId);
+    const deletedTeam = await teamService.deleteTeam(teamId);
     if (!deletedTeam) {
       return res.status(404).json({ message: "Team not found" });
     }
