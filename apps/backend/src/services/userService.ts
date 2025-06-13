@@ -21,7 +21,7 @@ class UserService {
   }
 
   async deleteUser(userId: string): Promise<IUser | null> {
-    return await User.findByIdAndDelete(userId).select("-password");
+    return await User.findOneAndDelete({ _id: userId }).select("-password");
   }
 }
 

@@ -1,4 +1,7 @@
+import mongoose from "mongoose";
+
 import Team, { ITeam } from "../models/Team";
+import User from "../models/User";
 
 class TeamService {
   async getTeams(): Promise<ITeam[]> {
@@ -31,8 +34,46 @@ class TeamService {
     });
   }
 
+
+
   async deleteTeam(teamId: string): Promise<ITeam | null> {
     return await Team.findByIdAndDelete(teamId);
+  }
+
+      async addUserToTeam(userId: string, teamId: string) {
+    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(teamId)) {
+      throw new Error("ID invalide.");
+    }
+
+    await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { teams: teamId } },
+      { new: true }
+    );
+
+    await Team.findByIdAndUpdate(
+      teamId,
+      { $addToSet: { users: userId } },
+      { new: true }
+    );
+  }
+
+  async removeUserFromTeam(userId: string, teamId: string) {
+    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(teamId)) {
+      throw new Error("ID invalide.");
+    }
+
+    await User.findByIdAndUpdate(
+      userId,
+      { $pull: { teams: teamId } },
+      { new: true }
+    );
+
+    await Team.findByIdAndUpdate(
+      teamId,
+      { $pull: { users: userId } },
+      { new: true }
+    );
   }
 }
 

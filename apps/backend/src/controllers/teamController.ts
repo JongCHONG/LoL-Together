@@ -69,3 +69,28 @@ export const deleteTeam = async (req: Request, res: Response) => {
     res.status(500).json({ error: error.message });
   }
 };
+export const addUserToTeam = async (req: Request, res: Response) => {
+  const { userId, teamId } = req.body;
+
+  try {
+    await teamService.addUserToTeam(userId, teamId);
+    res
+      .status(200)
+      .json({ message: "User add to team successfully" });
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const removeUserFromTeam = async (req: Request, res: Response) => {
+  const { userId, teamId } = req.body;
+
+  try {
+    await teamService.removeUserFromTeam(userId, teamId);
+    res
+      .status(200)
+      .json({ message: "User removed from team successfully" });
+  } catch (error: any) {
+    res.status(400).json({ error: error.message });
+  }
+};
