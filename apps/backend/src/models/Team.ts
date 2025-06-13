@@ -34,9 +34,9 @@ const TeamSchema = new Schema<ITeam>(
 TeamSchema.post("save", async (team: ITeam) => {
   await mongoose
     .model("User")
-    .findOneAndUpdate(
-      { _id: { $in: team.leader_id } },
-      { $push: { teams: team._id } }
+    .findByIdAndUpdate(
+      team.leader_id,
+      { $addToSet: { teams: team._id } } 
     );
   console.log(`Team ${team._id} added to leader ${team.leader_id}.`);
 });
@@ -49,6 +49,11 @@ TeamSchema.post("findOneAndDelete", async (team: ITeam) => {
       { $pull: { teams: team._id } }
     );
   console.log(`Team ${team._id} removed from ${result.modifiedCount} user(s).`);
+
+  const announceResult = await mongoose
+    .model("Announce")
+    .deleteMany({ team: team._id });
+  console.log(`Deleted ${announceResult.deletedCount} announce(s) for team ${team._id}.`);
 });
 
 const Team = mongoose.model<ITeam>("Team", TeamSchema);

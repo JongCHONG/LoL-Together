@@ -6,6 +6,7 @@ import { connectDB } from "./db";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
 import teamRoutes from "./routes/teamRoutes";
+import announceRoutes from "./routes/announceRoutes";
 
 connectDB();
 
@@ -17,6 +18,7 @@ app.use(cors());
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/teams", teamRoutes)
+app.use("/api/announces", announceRoutes);
 
 
 const PORT = process.env.PORT || 5000;

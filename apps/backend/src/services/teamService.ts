@@ -4,14 +4,13 @@ import Team, { ITeam } from "../models/Team";
 import User from "../models/User";
 
 class TeamService {
-  async getTeams(): Promise<ITeam[]> {
+  async getAllTeams(): Promise<ITeam[]> {
     return await Team.find();
   }
 
   async getTeamById(teamId: string): Promise<ITeam | null> {
-    return await Team.findById(teamId)
-      .populate("users", "-password")
-      // .populate("announcements");
+    return await Team.findById(teamId).populate("users", "-password");
+    // .populate("announcements");
   }
 
   async createTeam(leaderId: string, name: string): Promise<ITeam> {
@@ -34,14 +33,15 @@ class TeamService {
     });
   }
 
-
-
   async deleteTeam(teamId: string): Promise<ITeam | null> {
     return await Team.findByIdAndDelete(teamId);
   }
 
-      async addUserToTeam(userId: string, teamId: string) {
-    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(teamId)) {
+  async addUserToTeam(userId: string, teamId: string) {
+    if (
+      !mongoose.Types.ObjectId.isValid(userId) ||
+      !mongoose.Types.ObjectId.isValid(teamId)
+    ) {
       throw new Error("ID invalide.");
     }
 
@@ -59,7 +59,10 @@ class TeamService {
   }
 
   async removeUserFromTeam(userId: string, teamId: string) {
-    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(teamId)) {
+    if (
+      !mongoose.Types.ObjectId.isValid(userId) ||
+      !mongoose.Types.ObjectId.isValid(teamId)
+    ) {
       throw new Error("ID invalide.");
     }
 

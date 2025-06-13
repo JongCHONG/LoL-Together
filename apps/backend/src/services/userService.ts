@@ -1,7 +1,7 @@
 import User, { IUser } from "../models/User";
 
 class UserService {
-  async getUsers(): Promise<IUser[]> {
+  async getAllUsers(): Promise<IUser[]> {
     return await User.find();
   }
 

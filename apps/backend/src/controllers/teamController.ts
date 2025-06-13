@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 
 import teamService from "../services/teamService";
 
-export const getTeams = async (req: Request, res: Response) => {
+export const getAllTeams = async (req: Request, res: Response) => {
   try {
-    const teams = await teamService.getTeams();
+    const teams = await teamService.getAllTeams();
     res.status(200).json(teams);
   } catch (error: any) {
     res.status(500).json({ error: error.message });

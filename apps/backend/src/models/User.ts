@@ -56,21 +56,19 @@ const UserSchema = new Schema<IUser>(
 // });
 
 UserSchema.post("findOneAndDelete", async (user) => {
-  // await mongoose
-  //   .model("Announcement")
-  //   .findOneAndUpdate(
-  //     { _id: user.announcements },
-  //     { $pull: { users: user._id } }
-  //   );
+  await mongoose
+    .model("Announce")
+    .deleteMany({ user: user._id });
   // await mongoose
   //   .model("Conversation")
   //   .findOneAndUpdate(
   //     { _id: user.conversations },
   //     { $pull: { users: user._id } }
   //   );
-  await mongoose
-    .model("Team")
-    .findOneAndUpdate({ _id: user.teams }, { $pull: { users: user._id } });
+  await mongoose.model("Team").updateMany(
+    { users: user._id },
+    { $pull: { users: user._id } }
+  );
 });
 
 const User = mongoose.model("User", UserSchema);

@@ -1,7 +1,7 @@
 import { Router, RequestHandler } from "express";
 
 import {
-  getTeams,
+  getAllTeams,
   createTeam,
   updateTeam,
   deleteTeam,
@@ -12,8 +12,8 @@ import { checkTeamExists } from "../middlewares/checkTeamExists";
 
 const router = Router();
 
-router.get("/list", getTeams);
-router.get("/:teamId", getTeams as RequestHandler);
+router.get("/list", getAllTeams);
+router.get("/:teamId", getAllTeams as RequestHandler);
 router.post("/create", checkTeamExists, createTeam as RequestHandler);
 router.put("/:teamId", checkTeamExists, updateTeam as RequestHandler);
 router.delete("/:teamId", deleteTeam as RequestHandler);
