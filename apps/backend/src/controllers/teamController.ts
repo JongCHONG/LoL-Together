@@ -44,7 +44,6 @@ export const updateTeam = async (req: Request, res: Response) => {
 
   try {
     const updatedTeam = await teamService.updateTeam(teamId, updateData);
-
     if (!updatedTeam) {
       return res.status(404).json({ message: "Team not found" });
     }
@@ -64,19 +63,19 @@ export const deleteTeam = async (req: Request, res: Response) => {
     if (!deletedTeam) {
       return res.status(404).json({ message: "Team not found" });
     }
+
     res.status(200).json({ message: "Team deleted successfully" });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
+
 export const addUserToTeam = async (req: Request, res: Response) => {
   const { userId, teamId } = req.body;
 
   try {
     await teamService.addUserToTeam(userId, teamId);
-    res
-      .status(200)
-      .json({ message: "User add to team successfully" });
+    res.status(200).json({ message: "User add to team successfully" });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
@@ -87,9 +86,7 @@ export const removeUserFromTeam = async (req: Request, res: Response) => {
 
   try {
     await teamService.removeUserFromTeam(userId, teamId);
-    res
-      .status(200)
-      .json({ message: "User removed from team successfully" });
+    res.status(200).json({ message: "User removed from team successfully" });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }

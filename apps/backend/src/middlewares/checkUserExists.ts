@@ -7,23 +7,23 @@ export const checkUserExists = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { email, summoner_name } = req.body;
+    const { email, riot_id, tagline } = req.body;
 
-    if (!email || !summoner_name) {
+    if (!email || !riot_id || !tagline) {
       res
         .status(400)
-        .json({ message: "Email and summoner_name are required." });
+        .json({ message: "Email, tagline and riot_id are required." });
       return;
     }
 
     const existingUser = await User.findOne({
-      $or: [{ email }, { summoner_name }],
+      $or: [{ email }, { riot_id }],
     });
 
     if (existingUser) {
       res
         .status(409)
-        .json({ message: "Email or summoner_name already in use." });
+        .json({ message: "Email or riot_id already in use." });
       return;
     }
 

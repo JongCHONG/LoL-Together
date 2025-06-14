@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import Team from "../models/Team";
 
-export const checkTeamExists = async (
+export const checkTeamNameExists = async (
   req: Request,
   res: Response,
   next: NextFunction

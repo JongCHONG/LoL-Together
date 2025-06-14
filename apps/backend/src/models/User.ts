@@ -1,10 +1,27 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
 
+export interface RiotInfos {
+  profileIconId: number;
+  summonerLevel: number;
+  queueType: string;
+  tier: string;
+  rank: string;
+  leaguePoints: number;
+  wins: number;
+  losses: number;
+  veteran: boolean;
+  inactive: boolean;
+  freshBlood: boolean;
+  hotStreak: boolean;
+  gameEndTimestamp?: number; 
+}
+
 export interface IUser extends Document {
   password: string;
   email: string;
-  summoner_name: string;
-  summoner_infos?: object;
+  riot_id: string;
+  tagline: string;
+  riot_infos?: RiotInfos;
   avatar?: string;
   discord?: string;
   region?: string;
@@ -21,8 +38,9 @@ const UserSchema = new Schema<IUser>(
   {
     password: { type: String, required: true },
     email: { type: String, unique: true, required: true },
-    summoner_name: { type: String, required: true, unique: true },
-    summoner_infos: { type: Object },
+    riot_id: { type: String, required: true, unique: true },
+    tagline: { type: String, required: true },
+    riot_infos: { type: Object },
     avatar: { type: String },
     discord: { type: String },
     region: { type: String },
@@ -56,19 +74,16 @@ const UserSchema = new Schema<IUser>(
 // });
 
 UserSchema.post("findOneAndDelete", async (user) => {
-  await mongoose
-    .model("Announce")
-    .deleteMany({ user: user._id });
+  await mongoose.model("Announce").deleteMany({ user: user._id });
   // await mongoose
   //   .model("Conversation")
   //   .findOneAndUpdate(
   //     { _id: user.conversations },
   //     { $pull: { users: user._id } }
   //   );
-  await mongoose.model("Team").updateMany(
-    { users: user._id },
-    { $pull: { users: user._id } }
-  );
+  await mongoose
+    .model("Team")
+    .updateMany({ users: user._id }, { $pull: { users: user._id } });
 });
 
 const User = mongoose.model("User", UserSchema);
