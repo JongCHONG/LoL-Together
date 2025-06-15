@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Types } from 'mongoose';
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 interface IConversation extends Document {
   messages: Types.ObjectId[];
@@ -7,36 +7,53 @@ interface IConversation extends Document {
   updatedAt: Date;
 }
 
-const ConversationSchema = new Schema<IConversation>({
-  messages: [{
-    type: Schema.Types.ObjectId, 
-    ref: "Message"
-  }],
-  users: [{
-    type: Schema.Types.ObjectId, 
-    ref: "User"
-  }]
-}, {
-  timestamps: true
+const ConversationSchema = new Schema<IConversation>(
+  {
+    messages: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Message",
+      },
+    ],
+    users: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+ConversationSchema.post("save", async function (conversation: IConversation) {
+  await mongoose
+    .model("User")
+    .updateMany(
+      { _id: { $in: conversation.users } },
+      { $push: { conversations: conversation._id } }
+    );
 });
 
-// ConversationSchema.post('save', async function(conversation: IConversation) {
-//   await mongoose.model('User').updateMany(
-//     { _id: { $in: conversation.users } },
-//     { $push: { conversations: conversation._id } }
-//   );
-// });
+ConversationSchema.post(
+  "findOneAndDelete",
+  async function (conversation: IConversation) {
+    await mongoose
+      .model("User")
+      .updateMany(
+        { _id: { $in: conversation.users } },
+        { $pull: { conversations: conversation._id } }
+      );
+    await mongoose
+      .model("Message")
+      .deleteMany({ conversationId: conversation._id });
+  }
+);
 
-// ConversationSchema.post('findOneAndDelete', async function(conversation: IConversation) {
-//   await mongoose.model('User').updateMany(
-//     { _id: { $in: conversation.users } },
-//     { $pull: { conversations: conversation._id } }
-//   );
-//   await mongoose.model('Message').deleteMany(
-//     { _id: { $in: conversation.messages } }
-//   );
-// });
-
-const Conversation = mongoose.model<IConversation>("Conversation", ConversationSchema);
+const Conversation = mongoose.model<IConversation>(
+  "Conversation",
+  ConversationSchema
+);
 
 export default Conversation;

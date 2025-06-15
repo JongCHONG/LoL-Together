@@ -55,35 +55,34 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-// UserSchema.post("save", async (user) => {
-//   await mongoose
-//     .model("Announcement")
-//     .findOneAndUpdate(
-//       { _id: user.announcements },
-//       { $push: { users: user._id } }
-//     );
-//   await mongoose
-//     .model("Conversation")
-//     .findOneAndUpdate(
-//       { _id: user.conversations },
-//       { $push: { users: user._id } }
-//     );
-//   await mongoose
-//     .model("Team")
-//     .findOneAndUpdate({ _id: user.teams }, { $push: { users: user._id } });
-// });
 
 UserSchema.post("findOneAndDelete", async (user) => {
   await mongoose.model("Announce").deleteMany({ user: user._id });
-  // await mongoose
-  //   .model("Conversation")
-  //   .findOneAndUpdate(
-  //     { _id: user.conversations },
-  //     { $pull: { users: user._id } }
-  //   );
+
   await mongoose
     .model("Team")
     .updateMany({ users: user._id }, { $pull: { users: user._id } });
+
+  await mongoose
+    .model("Message")
+    .deleteMany({ $or: [{ sender: user._id }, { receiver: user._id }] });
+
+  const conversations = await mongoose
+    .model("Conversation")
+    .find({ users: user._id })
+    .select("_id");
+
+  const conversationIds = conversations.map((conv) => conv._id);
+
+  await mongoose
+    .model("Conversation")
+    .deleteMany({ _id: { $in: conversationIds } });
+
+  if (conversationIds.length > 0) {
+    await mongoose
+      .model("Message")
+      .deleteMany({ conversation: { $in: conversationIds } });
+  }
 });
 
 const User = mongoose.model("User", UserSchema);

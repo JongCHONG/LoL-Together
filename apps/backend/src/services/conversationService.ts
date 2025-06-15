@@ -12,21 +12,17 @@ export class ConversationService {
   }
 
   static async getConversationById(id: string) {
-    return await Conversation.findById(id)
-      // .populate("messages")
-      .populate({ path: "users", select: "riot_id" });
-  }
-
-  static async getConversationListByUserId(userId: string) {
-       return Conversation.find({ users: userId }).populate({
+    return await Conversation.findById(id).populate({
       path: "users",
       select: "riot_id",
     });
+  }
 
-    // .populate({
-    //   path: "messages",
-    //   select: "text createdAt"
-    // });
+  static async getConversationListByUserId(userId: string) {
+    return Conversation.find({ users: userId }).populate({
+      path: "users",
+      select: "riot_id",
+    });
   }
 
   static async updateConversation(

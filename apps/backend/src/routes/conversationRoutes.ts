@@ -6,13 +6,13 @@ import {
   updateConversation,
   deleteConversation,
 } from "../controllers/conversationController";
-import { checkConversationExists } from "../middlewares/checkConversationExists";
+import { checkConversationExistsByUserIds } from "../middlewares/checkConversationExists";
 
 const router = express.Router();
 
 router.post(
   "/create",
-  checkConversationExists,
+  checkConversationExistsByUserIds,
   createConversation as RequestHandler
 );
 router.get("/list/:userId", getConversationListByUserId);

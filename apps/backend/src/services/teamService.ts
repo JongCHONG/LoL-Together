@@ -10,7 +10,6 @@ export class TeamService {
 
  static async getTeamById(teamId: string): Promise<ITeam | null> {
     return await Team.findById(teamId).populate("users", "-password");
-    // .populate("announcements");
   }
 
  static async createTeam(leaderId: string, name: string): Promise<ITeam> {
