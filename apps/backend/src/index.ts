@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
 import teamRoutes from "./routes/teamRoutes";
 import announceRoutes from "./routes/announceRoutes";
+import conversationRoutes from "./routes/conversationRoutes";
 
 connectDB();
 
@@ -17,9 +18,9 @@ app.use(cors());
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/teams", teamRoutes)
+app.use("/api/teams", teamRoutes);
 app.use("/api/announces", announceRoutes);
-
+app.use("/api/conversations", conversationRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

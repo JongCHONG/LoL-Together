@@ -1,24 +1,32 @@
 import mongoose from "mongoose";
 
+import Conversation from "../models/Conversation";
+
 export class ConversationService {
   static async createConversation(data: {
     messages?: mongoose.Types.ObjectId[];
     users: mongoose.Types.ObjectId[];
   }) {
-    const conversation = new mongoose.models.Conversation(data);
+    const conversation = new Conversation(data);
     return await conversation.save();
   }
 
   static async getConversationById(id: string) {
-    return await mongoose.models.Conversation.findById(id)
-      .populate("messages")
-      .populate("users");
+    return await Conversation.findById(id)
+      // .populate("messages")
+      .populate({ path: "users", select: "riot_id" });
   }
 
-  static async getAllConversations() {
-    return await mongoose.models.Conversation.find()
-      .populate("messages")
-      .populate("users");
+  static async getConversationListByUserId(userId: string) {
+       return Conversation.find({ users: userId }).populate({
+      path: "users",
+      select: "riot_id",
+    });
+
+    // .populate({
+    //   path: "messages",
+    //   select: "text createdAt"
+    // });
   }
 
   static async updateConversation(
@@ -28,14 +36,14 @@ export class ConversationService {
       users?: mongoose.Types.ObjectId[];
     }
   ) {
-    return await mongoose.models.Conversation.findByIdAndUpdate(id, data, {
+    return await Conversation.findByIdAndUpdate(id, data, {
       new: true,
     })
-      .populate("messages")
-      .populate("users");
+      // .populate("messages")
+      .populate({ path: "users", select: "riot_id" });
   }
 
   static async deleteConversation(id: string) {
-    return await mongoose.models.Conversation.findByIdAndDelete(id);
+    return await Conversation.findByIdAndDelete(id);
   }
 }

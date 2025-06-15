@@ -1,15 +1,15 @@
 import User, { IUser } from "../models/User";
 
-class UserService {
-  async getAllUsers(): Promise<IUser[]> {
+export class UserService {
+  static async getAllUsers(): Promise<IUser[]> {
     return await User.find();
   }
 
-  async getUserById(userId: string): Promise<IUser | null> {
+  static async getUserById(userId: string): Promise<IUser | null> {
     return await User.findById(userId).select("-password");
   }
 
-  async updateUser(
+  static async updateUser(
     userId: string,
     updateData: Partial<IUser>
   ): Promise<IUser | null> {
@@ -20,9 +20,8 @@ class UserService {
     }).select("-password");
   }
 
-  async deleteUser(userId: string): Promise<IUser | null> {
+  static async deleteUser(userId: string): Promise<IUser | null> {
     return await User.findOneAndDelete({ _id: userId }).select("-password");
   }
 }
 
-export default new UserService();

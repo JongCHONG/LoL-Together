@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import * as authService from "../services/authService";
+
+import { AuthService } from "../services/authService";
 
 export const signUp = async (req: Request, res: Response) => {
   try {
     const { password, email, riot_id, tagline } = req.body;
-    const { token, user } = await authService.signUp(
+    const { token, user } = await AuthService.signUp(
       email,
       password,
       riot_id,
@@ -21,7 +22,7 @@ export const signUp = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    const { token } = await authService.login(email, password);
+    const { token } = await AuthService.login(email, password);
 
     res.status(200).json({ message: "Login success", token });
   } catch (error: any) {
