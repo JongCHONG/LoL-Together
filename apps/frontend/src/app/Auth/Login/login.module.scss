@@ -1,0 +1,16 @@
+.container {
+  background: url("../../../assets/images/login-jinx.jpg") no-repeat center
+    center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+
+  .title {
+    font-size: 48px;
+    color: white;
+    font-family: "Merienda";
+    margin-bottom: 20px;
+  }
+}

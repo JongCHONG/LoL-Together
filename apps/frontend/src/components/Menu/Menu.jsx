@@ -16,7 +16,7 @@ const Menu = () => {
           <a href="/">Teams</a>
         </li>
         <li className={MenuStyles.menu_container_item}>
-          <a href="/login">Connexion</a>
+          <a href="/auth/login">Connexion</a>
         </li>
         <li className={MenuStyles.menu_container_item}>
           <a href="/signup">Inscription</a>
