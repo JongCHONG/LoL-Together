@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "Blinker-Light";
+  src: url("../assets/fonts/Blinker-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Merienda";
+  src: url("../assets/fonts/Merienda-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,9 +33,9 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "Blinker-Light";
 }
 
 * {
