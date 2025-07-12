@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import User, { IUser } from "../models/User";
 import { buildRiotInfos } from "../helpers/riotHelper";
-import { RiotService } from "./riotService";
+import { RiotService } from "./RiotService";
 
 export class AuthService {
   static async signUp(
