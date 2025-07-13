@@ -2,7 +2,7 @@ import User, { IUser } from "../models/User";
 
 export class UserService {
   static async getAllUsers(): Promise<IUser[]> {
-    return await User.find();
+    return await User.find().select("-password");
   }
 
   static async getUserById(userId: string): Promise<IUser | null> {
@@ -24,4 +24,3 @@ export class UserService {
     return await User.findOneAndDelete({ _id: userId }).select("-password");
   }
 }
-
