@@ -10,7 +10,7 @@ const Menu = () => {
           <a href="/">Accueil</a>
         </li>
         <li className={MenuStyles.menu_container_item}>
-          <a href="/">Joueurs</a>
+          <a href="/players">Joueurs</a>
         </li>
         <li className={MenuStyles.menu_container_item}>
           <a href="/">Teams</a>

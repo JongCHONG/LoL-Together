@@ -14,6 +14,9 @@ const validationSchema = Yup.object({
   password: Yup.string()
     .min(6, "Le mot de passe doit contenir au moins 6 caractères")
     .required("Le mot de passe est requis"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], "Les mots de passe doivent correspondre")
+    .required("La confirmation du mot de passe est requise"),
   riot_id: Yup.string()
     .min(3, "Le Riot ID doit contenir au moins 3 caractères")
     .max(16, "Le Riot ID ne peut pas dépasser 16 caractères")
@@ -71,6 +74,7 @@ const page = () => {
         initialValues={{
           email: "",
           password: "",
+          confirmPassword: "",
           riot_id: "",
           tagline: "",
         }}
@@ -117,6 +121,23 @@ const page = () => {
               />
               <ErrorMessage
                 name="password"
+                component="div"
+                className={SignupStyles.error}
+              />
+            </div>
+
+            <div className={SignupStyles.field}>
+              <label htmlFor="confirmPassword" className={SignupStyles.label}>
+                Confirmer le mot de passe
+              </label>
+              <Field
+                type="password"
+                name="confirmPassword"
+                className={SignupStyles.input}
+                placeholder="Confirmez votre mot de passe"
+              />
+              <ErrorMessage
+                name="confirmPassword"
                 component="div"
                 className={SignupStyles.error}
               />

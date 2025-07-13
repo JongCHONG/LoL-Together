@@ -13,13 +13,13 @@ export class AuthService {
     tagline: string
   ): Promise<{ user: IUser; token: string }> {
     try {
-      const account = await RiotService.getAccountByRiotId(riot_id, tagline);
-      const summoner = await RiotService.getSummonerByPuuid(account.puuid);
+      const account = await RiotService.getAccountByRiotId(riot_id, tagline);     
+      const summoner = await RiotService.getSummonerByPuuid(account.puuid);      
       const lastMatches = await RiotService.getListMatchesByPuuid(
         account.puuid
       );
       const lastMatchDetails = await RiotService.getMatchById(lastMatches[0]);
-      const leagueEntries = await RiotService.getLeagueEntries(summoner.id);
+      const leagueEntries = await RiotService.getLeagueEntries(account.puuid);
 
       const riot_infos = buildRiotInfos(
         summoner,

@@ -1,0 +1,17 @@
+.banner {
+  background: url("../../assets/images/background-players.jpg") no-repeat;
+  background-size: cover;
+  height: 60vh;
+  position: relative;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1));
+    pointer-events: none;
+  }
+}

@@ -21,7 +21,7 @@ export class RiotService {
       const response = await axios.get(
         `https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}`,
         { headers: { "X-Riot-Token": process.env.RIOT_API_KEY } }
-      );
+      );      
       return response.data;
     } catch (error: any) {
       throw new Error(`Summoner fetch failed: ${error.message}`);
@@ -52,11 +52,11 @@ export class RiotService {
     }
   }
 
-  static async getLeagueEntries(summonerId: string) {
+  static async getLeagueEntries(puuid: string) {
     // leagueId, queueType, tier, rank, summonerId, puuid, leaguePoints, wins, losses, veteran, inactive, freshBlood, hotStreak
     try {
       const response = await axios.get(
-        `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${summonerId}`,
+        `https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}`,
         { headers: { "X-Riot-Token": process.env.RIOT_API_KEY } }
       );
       return response.data;
