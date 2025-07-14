@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
+import { FaDiscord } from "react-icons/fa6";
+
 import "./ProfileCard.css";
 
 interface ProfileCardProps {
@@ -14,9 +16,11 @@ interface ProfileCardProps {
   name?: string;
   title?: string;
   handle?: string;
-  status?: string;
+  tier?: string;
   contactText?: string;
   showUserInfo?: boolean;
+  wins?: number;
+  losses?: number;
   onContactClick?: () => void;
 }
 
@@ -64,10 +68,12 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   name = "Javi A. Torres",
   title = "Software Engineer",
   handle = "javicodes",
-  status = "Online",
+  tier = "Online",
   contactText = "Contact",
   showUserInfo = true,
   onContactClick,
+  wins = 0,
+  losses = 0,
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -279,6 +285,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                 target.style.display = "none";
               }}
             />
+
             {showUserInfo && (
               <div className="pc-user-info">
                 <div className="pc-user-details">
@@ -295,8 +302,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                     />
                   </div>
                   <div className="pc-user-text">
-                    <div className="pc-handle">@{handle}</div>
-                    <div className="pc-status">{status}</div>
+                    <div className="pc-handle">
+                      <FaDiscord />
+                      {handle}
+                    </div>
+                    <div className="pc-status">{tier}</div>
                   </div>
                 </div>
                 <button
@@ -311,10 +321,15 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
               </div>
             )}
           </div>
+
           <div className="pc-content">
             <div className="pc-details">
               <h3>{name}</h3>
               <p>{title}</p>
+              <div className="pc-wins-losses">
+                <span className="pc-wins">Victoires: {wins}</span>
+                <span className="pc-losses">Défaites: {losses}</span>
+              </div>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import Link from "next/link";
 import MenuStyles from "./Menu.module.scss";
 
 const Menu = () => {
@@ -7,19 +7,19 @@ const Menu = () => {
     <nav>
       <ul className={MenuStyles.menu_container}>
         <li className={MenuStyles.menu_container_item}>
-          <a href="/">Accueil</a>
+          <Link href="/">Accueil</Link>
         </li>
         <li className={MenuStyles.menu_container_item}>
-          <a href="/players">Joueurs</a>
+          <Link href="/players">Joueurs</Link>
         </li>
         <li className={MenuStyles.menu_container_item}>
-          <a href="/">Teams</a>
+          <Link href="/teams">Teams</Link>
         </li>
         <li className={MenuStyles.menu_container_item}>
-          <a href="/auth/login">Connexion</a>
+          <Link href="/auth/login">Connexion</Link>
         </li>
         <li className={MenuStyles.menu_container_item}>
-          <a href="/auth/signup">Inscription</a>
+          <Link href="/auth/signup">Inscription</Link>
         </li>
       </ul>
     </nav>

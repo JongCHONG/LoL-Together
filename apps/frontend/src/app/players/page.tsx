@@ -8,10 +8,14 @@ import ProfileCard from "@/components/ProfileCard/ProfileCard";
 type User = {
   riot_infos: {
     profileIconId: number;
-    // add other properties if needed
+    tier?: string;
+    rank?: string;
+    wins?: number;
+    losses?: number;
   };
   riot_id: string;
   tagline: string;
+  discord?: string; 
 };
 
 const page = () => {
@@ -71,9 +75,11 @@ const page = () => {
                   key={index}
                   name={user.riot_id}
                   title={`#${user.tagline}`}
-                  handle="javicodes"
-                  status="Online"
-                  contactText="Contact Me"
+                  handle={user.discord || "N/A"}
+                  wins={user.riot_infos.wins || 0}
+                  losses={user.riot_infos.losses || 0}
+                  tier={(user.riot_infos.tier && user.riot_infos.rank) ? `${user.riot_infos.tier} ${user.riot_infos.rank}` : "Non classé"}
+                  contactText="Voir plus"
                   avatarUrl={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/${user.riot_infos.profileIconId}.png`}
                   showUserInfo={true}
                   enableTilt={true}

@@ -8,7 +8,9 @@ import PageStyles from "./page.module.scss";
 
 const Carousel = dynamic(() => import("react-multi-carousel"), {
   ssr: false,
+  loading: () => <div style={{ height: '400px' }}>Chargement du carousel...</div>
 });
+
 
 const App = () => {
   const responsive = {
