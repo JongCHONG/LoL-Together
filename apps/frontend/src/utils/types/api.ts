@@ -10,6 +10,8 @@ export interface User {
     rank?: string;
     wins?: number;
     losses?: number;
+    summonerLevel?: number;
+    queueType?: string;
   };
   riot_id: string;
   tagline: string;

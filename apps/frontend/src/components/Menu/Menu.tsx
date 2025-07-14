@@ -1,20 +1,19 @@
 import MenuStyles from "./Menu.module.scss";
 import { useAuth } from "../../utils/hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
-import { logoutUser } from "../../utils/api/auth";
 
 const Menu = () => {
   const { isAuthenticated, isLoading, refreshAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logoutUser(); // Supprime le token du localStorage
+    localStorage.removeItem("authToken");
     refreshAuth(); // Force la mise à jour de l'état d'auth
-    navigate("/"); // Rediriger vers la page d'accueil
+    navigate("/"); 
   };
 
   if (isLoading) {
-    return null; // Ou un spinner de chargement
+    return null; 
   }
 
   return (
@@ -41,6 +40,7 @@ const Menu = () => {
             <button
               onClick={handleLogout}
               style={{
+                fontFamily: "inherit",
                 background: "none",
                 border: "none",
                 color: "inherit",

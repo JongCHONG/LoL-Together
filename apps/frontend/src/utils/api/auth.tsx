@@ -37,15 +37,3 @@ export const registerUser = async (credentials: RegisterCredentials): Promise<Au
 
   return data;
 };
-
-export const logoutUser = (): void => {
-  localStorage.removeItem("authToken");
-};
-
-export const isAuthenticated = (): boolean => {
-  return !!localStorage.getItem("authToken");
-};
-
-export const getAuthToken = (): string | null => {
-  return localStorage.getItem("authToken");
-};

@@ -1,0 +1,16 @@
+.container {
+  border-right: 1px solid goldenrod;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 10%;
+  }
+  .emblem {
+    width: 100px;
+
+  }
+}

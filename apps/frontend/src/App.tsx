@@ -6,8 +6,9 @@ import Register from "./pages/Register/Register";
 import Users from "./pages/Users/Users";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { UserProvider } from "./contexts/UserContext";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <UserProvider>
@@ -16,10 +17,17 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/users" element={<Users />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </UserProvider>
     </BrowserRouter>
   );
-}
+};
 export default App;
