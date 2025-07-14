@@ -29,13 +29,3 @@ export const login = async (req: Request, res: Response) => {
     res.status(401).json({ error: error.message });
   }
 };
-
-export const logout = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const result = await AuthService.logout();
-
-    res.status(200).json(result);
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
-  }
-};

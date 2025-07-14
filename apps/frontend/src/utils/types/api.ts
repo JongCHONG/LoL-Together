@@ -4,6 +4,16 @@ export interface User {
   email: string;
   summonerName?: string;
   region?: string;
+  riot_infos: {
+    profileIconId: number;
+    tier?: string;
+    rank?: string;
+    wins?: number;
+    losses?: number;
+  };
+  riot_id: string;
+  tagline: string;
+  discord?: string;
   createdAt: string;
   updatedAt: string;
 }

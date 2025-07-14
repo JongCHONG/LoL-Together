@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { decodeToken } from "react-jwt";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
@@ -10,10 +11,14 @@ import Menu from "../../components/Menu/Menu";
 import { loginUser } from "../../utils/api/auth";
 import { LoginCredentials } from "../../utils/types/auth";
 import { loginValidationSchema } from "../../utils/validations/auth";
+import { fetchUserById } from "../../utils/api/user";
+
+import { useUser } from "../../contexts/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
+  const { setUser } = useUser();
 
   const handleSubmit = async (
     values: LoginCredentials,
@@ -23,13 +28,21 @@ const Login = () => {
       setLoginError("");
 
       const data = await loginUser(values);
-      
+
       localStorage.setItem("authToken", data.token);
+      const decodedToken = decodeToken(data.token) as { userId: string };
+
+      const user = await fetchUserById(decodedToken.userId);
+      setUser(user);
+
       navigate("/dashboard");
-      
     } catch (error) {
       console.error("Erreur lors de la connexion:", error);
-      setLoginError(error instanceof Error ? error.message : "Erreur de connexion au serveur");
+      setLoginError(
+        error instanceof Error
+          ? error.message
+          : "Erreur de connexion au serveur"
+      );
     } finally {
       setSubmitting(false);
     }

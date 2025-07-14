@@ -20,9 +20,7 @@ export const loginUser = async (credentials: LoginCredentials): Promise<AuthResp
   return data;
 };
 
-export const registerUser = async (credentials: RegisterCredentials): Promise<AuthResponse> => {
-  console.log("Registering user with credentials:", credentials);
-  
+export const registerUser = async (credentials: RegisterCredentials): Promise<AuthResponse> => {  
   const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
     method: "POST",
     headers: {

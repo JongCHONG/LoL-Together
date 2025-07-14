@@ -1,11 +1,21 @@
 import MenuStyles from "./Menu.module.scss";
 import { useAuth } from "../../utils/hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logoutUser } from "../../utils/api/auth";
 
 const Menu = () => {
-  const isLoggedIn = useAuth();
+  const { isAuthenticated, isLoading, refreshAuth } = useAuth();
+  const navigate = useNavigate();
 
-  console.log("Menu component rendered, isLoggedIn:", isLoggedIn);
+  const handleLogout = () => {
+    logoutUser(); // Supprime le token du localStorage
+    refreshAuth(); // Force la mise à jour de l'état d'auth
+    navigate("/"); // Rediriger vers la page d'accueil
+  };
+
+  if (isLoading) {
+    return null; // Ou un spinner de chargement
+  }
 
   return (
     <nav>
@@ -14,21 +24,32 @@ const Menu = () => {
           <Link to="/">Accueil</Link>
         </li>
         <li className={MenuStyles.menu_container_item}>
-          <Link to="/players">Joueurs</Link>
+          <Link to="/users">Joueurs</Link>
         </li>
         <li className={MenuStyles.menu_container_item}>
           <Link to="/teams">Teams</Link>
         </li>
         <li className={MenuStyles.menu_container_item}>
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <Link to="/dashboard">Mon compte</Link>
           ) : (
             <Link to="/login">Connexion</Link>
           )}
         </li>
         <li className={MenuStyles.menu_container_item}>
-          {isLoggedIn ? (
-            <Link to="">Déconnexion</Link>
+          {isAuthenticated ? (
+            <button
+              onClick={handleLogout}
+              style={{
+                background: "none",
+                border: "none",
+                color: "inherit",
+                cursor: "pointer",
+                fontSize: "inherit",
+              }}
+            >
+              Déconnexion
+            </button>
           ) : (
             <Link to="/register">Inscription</Link>
           )}
