@@ -23,14 +23,14 @@ const Menu = () => {
           {isLoggedIn ? (
             <Link to="/dashboard">Mon compte</Link>
           ) : (
-            <Link to="/auth/login">Connexion</Link>
+            <Link to="/login">Connexion</Link>
           )}
         </li>
         <li className={MenuStyles.menu_container_item}>
           {isLoggedIn ? (
             <Link to="">Déconnexion</Link>
           ) : (
-            <Link to="/auth/signup">Inscription</Link>
+            <Link to="/register">Inscription</Link>
           )}
         </li>
       </ul>
