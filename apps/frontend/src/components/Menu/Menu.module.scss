@@ -1,0 +1,23 @@
+.menu_container {
+  display: flex;
+  list-style: none;
+  width: 100%;
+  justify-content: flex-end;
+  background-color: black;
+  color: white;
+  padding: 0.5rem;
+  opacity: 0.8;
+  position: fixed;
+  z-index: 2;
+
+  .menu_container_item {
+    margin: 0 10px;
+  }
+
+  .menu_container_item:hover {
+    color: #f0c040;
+    text-shadow: 0 0 8px rgba(240, 192, 64, 0.6);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+  }
+}
