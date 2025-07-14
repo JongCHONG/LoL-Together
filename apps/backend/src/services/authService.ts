@@ -6,7 +6,7 @@ import { buildRiotInfos } from "../helpers/riotHelper";
 import { RiotService } from "./RiotService";
 
 export class AuthService {
-  static async signUp(
+  static async register(
     email: string,
     password: string,
     riot_id: string,
@@ -71,13 +71,5 @@ export class AuthService {
     );
 
     return { user, token };
-  }
-
-  static async logout(): Promise<{ message: string }> {
-    try {
-      return { message: "Logout successful" };
-    } catch (error: any) {
-      throw new Error("Logout failed");
-    }
   }
 }

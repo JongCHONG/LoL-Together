@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 
 import { AuthService } from "../services/authService";
 
-export const signUp = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
   try {
     const { password, email, riot_id, tagline } = req.body;
-    const { token, user } = await AuthService.signUp(
+    const { token, user } = await AuthService.register(
       email,
       password,
       riot_id,
@@ -27,15 +27,5 @@ export const login = async (req: Request, res: Response) => {
     res.status(200).json({ message: "Login success", token });
   } catch (error: any) {
     res.status(401).json({ error: error.message });
-  }
-};
-
-export const logout = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const result = await AuthService.logout();
-
-    res.status(200).json(result);
-  } catch (error: any) {
-    res.status(400).json({ error: error.message });
   }
 };
