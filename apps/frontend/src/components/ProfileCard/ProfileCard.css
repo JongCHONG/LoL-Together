@@ -278,7 +278,6 @@
   filter: grayscale(1); /* Utilisez filter au lieu de mix-blend-mode */
 }
 
-
 .pc-card:hover .pc-avatar-content .avatar,
 .pc-card.active .pc-avatar-content .avatar {
   filter: grayscale(0); /* Retirez le filtre au hover */
@@ -390,7 +389,6 @@
     0.1px
   ) !important;
   z-index: 5;
-  /* Retirez mix-blend-mode: luminosity; */
 }
 
 .pc-details {
@@ -399,7 +397,7 @@
   top: 3em;
   display: flex;
   flex-direction: column;
-  mix-blend-mode: luminosity; /* Déplacez ici */
+  mix-blend-mode: luminosity;
 }
 
 .pc-details h3 {

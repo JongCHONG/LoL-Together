@@ -43,7 +43,7 @@ const page = () => {
 
         localStorage.setItem("authToken", token);
 
-        router.push("/account");
+        router.push("/dashboard");
       } else {
         setLoginError(data.message || "Erreur de connexion");
       }

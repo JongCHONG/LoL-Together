@@ -13,8 +13,8 @@ export class AuthService {
     tagline: string
   ): Promise<{ user: IUser; token: string }> {
     try {
-      const account = await RiotService.getAccountByRiotId(riot_id, tagline);     
-      const summoner = await RiotService.getSummonerByPuuid(account.puuid);      
+      const account = await RiotService.getAccountByRiotId(riot_id, tagline);
+      const summoner = await RiotService.getSummonerByPuuid(account.puuid);
       const lastMatches = await RiotService.getListMatchesByPuuid(
         account.puuid
       );
@@ -71,5 +71,13 @@ export class AuthService {
     );
 
     return { user, token };
+  }
+
+  static async logout(): Promise<{ message: string }> {
+    try {
+      return { message: "Logout successful" };
+    } catch (error: any) {
+      throw new Error("Logout failed");
+    }
   }
 }

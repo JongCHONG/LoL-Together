@@ -1,5 +1,5 @@
 .banner {
-  background: url("../../assets/images/background-players-yone.jpg") no-repeat;
+  background: url("../../assets/images/background-profile-thresh.jpeg") no-repeat;
   background-size: cover;
   height: 60vh;
   position: relative;
@@ -26,16 +26,5 @@
     height: 200px;
     background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1));
     pointer-events: none;
-  }
-}
-
-.container {
-  .usersList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-    margin-bottom: 20px;
   }
 }
