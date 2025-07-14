@@ -1,61 +1,35 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 
 import LoginStyles from "./login.module.scss";
-import { useNavigate } from "react-router-dom";
+
 import Menu from "../../components/Menu/Menu";
 
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+import { loginUser } from "../../utils/api/auth";
+import { LoginCredentials } from "../../utils/types/auth";
+import { loginValidationSchema } from "../../utils/validations/auth";
 
-const validationSchema = Yup.object({
-  email: Yup.string()
-    .email("Format d'email invalide")
-    .required("L'email est requis"),
-  password: Yup.string()
-    .min(6, "Le mot de passe doit contenir au moins 6 caractères")
-    .required("Le mot de passe est requis"),
-});
 const Login = () => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
 
   const handleSubmit = async (
-    values: LoginFormValues,
+    values: LoginCredentials,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     try {
       setLoginError("");
 
-      const response = await fetch("http://localhost:4000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        const token = data.token;
-
-        localStorage.setItem("authToken", token);
-
-        navigate("/dashboard");
-      } else {
-        setLoginError(data.message || "Erreur de connexion");
-      }
+      const data = await loginUser(values);
+      
+      localStorage.setItem("authToken", data.token);
+      navigate("/dashboard");
+      
     } catch (error) {
       console.error("Erreur lors de la connexion:", error);
-      setLoginError("Erreur de connexion au serveur");
+      setLoginError(error instanceof Error ? error.message : "Erreur de connexion au serveur");
     } finally {
       setSubmitting(false);
     }
@@ -72,7 +46,7 @@ const Login = () => {
             email: "",
             password: "",
           }}
-          validationSchema={validationSchema}
+          validationSchema={loginValidationSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (

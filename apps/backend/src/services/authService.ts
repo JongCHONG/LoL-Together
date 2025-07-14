@@ -6,7 +6,7 @@ import { buildRiotInfos } from "../helpers/riotHelper";
 import { RiotService } from "./RiotService";
 
 export class AuthService {
-  static async signUp(
+  static async register(
     email: string,
     password: string,
     riot_id: string,

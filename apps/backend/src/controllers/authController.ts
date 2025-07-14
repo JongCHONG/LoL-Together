@@ -2,10 +2,10 @@ import { Request, Response } from "express";
 
 import { AuthService } from "../services/authService";
 
-export const signUp = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
   try {
     const { password, email, riot_id, tagline } = req.body;
-    const { token, user } = await AuthService.signUp(
+    const { token, user } = await AuthService.register(
       email,
       password,
       riot_id,

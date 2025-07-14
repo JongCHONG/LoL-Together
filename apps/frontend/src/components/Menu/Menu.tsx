@@ -1,5 +1,5 @@
 import MenuStyles from "./Menu.module.scss";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../utils/hooks/useAuth";
 import { Link } from "react-router-dom";
 
 const Menu = () => {
