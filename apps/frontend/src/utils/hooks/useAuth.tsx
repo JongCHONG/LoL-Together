@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { isExpired } from "react-jwt";
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -7,7 +8,14 @@ export const useAuth = () => {
   const checkAuthStatus = () => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("authToken");
-      setIsAuthenticated(!!token);
+      
+      if (token && !isExpired(token)) {
+        setIsAuthenticated(true);
+      } else {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("userData");
+        setIsAuthenticated(false);
+      }
     }
     setIsLoading(false);
   };
@@ -15,7 +23,14 @@ export const useAuth = () => {
   useEffect(() => {
     checkAuthStatus();
 
-    // Écouter les changements du localStorage
+    const intervalId = setInterval(() => {
+      const token = localStorage.getItem("authToken");
+      if (token && isExpired(token)) {
+        console.log("Token expiré détecté");
+        checkAuthStatus();
+      }
+    }, 60000);
+
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === "authToken") {
         checkAuthStatus();
@@ -26,13 +41,25 @@ export const useAuth = () => {
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
+      clearInterval(intervalId);
     };
   }, []);
 
-  // Fonction pour forcer la mise à jour de l'état d'auth
-  const refreshAuth = () => {
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userData");
+    setIsAuthenticated(false);
+  };
+
+    const refreshAuth = () => {
     checkAuthStatus();
   };
 
-  return { isAuthenticated, isLoading, refreshAuth };
+  return { 
+    isAuthenticated, 
+    isLoading, 
+    refreshAuth,
+    logout,
+    checkAuthStatus
+  };
 };

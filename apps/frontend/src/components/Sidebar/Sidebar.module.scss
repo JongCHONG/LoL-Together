@@ -1,16 +1,25 @@
 .container {
-  border-right: 1px solid goldenrod;
+  border-right: 1px solid gold;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
+  padding-right: 50px;
+
+  h3 {
+    font-size: 24px;
+    color: white;
+    font-family: "Merienda";
+    margin-top: 20px;
+  }
   .avatar {
     width: 150px;
     height: 150px;
-    border-radius: 10%;
+    border-radius: 50%;
+    margin: 30px 0;
   }
   .emblem {
-    width: 100px;
-
+    width: 80px;
+    margin: 30px 0;
   }
 }

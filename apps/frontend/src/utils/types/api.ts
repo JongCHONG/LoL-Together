@@ -4,6 +4,10 @@ export interface User {
   email: string;
   summonerName?: string;
   region?: string;
+  languages?: string[];
+  disponibilities?: string[];
+  roles?: string[];
+  teams?: Team[];
   riot_infos: {
     profileIconId: number;
     tier?: string;
@@ -12,6 +16,7 @@ export interface User {
     losses?: number;
     summonerLevel?: number;
     queueType?: string;
+    gameEndTimestamp?: number;
   };
   riot_id: string;
   tagline: string;

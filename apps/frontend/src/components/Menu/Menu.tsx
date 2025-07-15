@@ -3,11 +3,11 @@ import { useAuth } from "../../utils/hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 
 const Menu = () => {
-  const { isAuthenticated, isLoading, refreshAuth } = useAuth();
+  const { isAuthenticated, isLoading, refreshAuth, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
+    logout();
     refreshAuth(); // Force la mise à jour de l'état d'auth
     navigate("/"); 
   };

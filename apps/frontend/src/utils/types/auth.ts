@@ -13,3 +13,10 @@ export interface RegisterCredentials {
 export interface AuthResponse {
   token: string;
 }
+
+export interface DecodedToken {
+  userId: string;
+  email: string;
+  exp: number;
+  iat: number;
+}
