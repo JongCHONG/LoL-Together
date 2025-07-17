@@ -5,7 +5,7 @@ export interface User {
   summonerName?: string;
   region?: string;
   languages?: string[];
-  disponibilities?: string[];
+  availabilities?: string[];
   roles?: string[];
   teams?: Team[];
   riot_infos: {

@@ -12,8 +12,8 @@ const UserInfos = () => {
   const [open, setOpen] = useState(false);
 
   const languages = user?.languages?.length ? user.languages.join(", ") : "N/A";
-  const disponibilities = user?.disponibilities?.length
-    ? user.disponibilities.join(", ")
+  const availabilities = user?.availabilities?.length
+    ? user.availabilities.join(", ")
     : "N/A";
   const roles = user?.roles?.length ? user.roles.join(", ") : "N/A";
   const teams = user?.teams?.length
@@ -36,7 +36,7 @@ const UserInfos = () => {
         <div className={UserInfosStyles.user_panel}>
           <div className={UserInfosStyles.user_info}>
             <div>Langue(s) : {languages}</div>
-            <div>Disponibilité(s) : {disponibilities}</div>
+            <div>Disponibilité(s) : {availabilities}</div>
             <div>Rôle(s) : {roles}</div>
           </div>
           <div className={UserInfosStyles.user_info}>

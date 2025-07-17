@@ -27,7 +27,7 @@ export interface IUser extends Document {
   region?: string;
   languages?: string[];
   description?: string;
-  disponibilities?: string[];
+  availabilities?: string[];
   roles?: string[];
   announcements?: Types.ObjectId[];
   conversations?: Types.ObjectId[];
@@ -46,7 +46,7 @@ const UserSchema = new Schema<IUser>(
     region: { type: String },
     languages: [{ type: String }],
     description: { type: String },
-    disponibilities: [{ type: String }],
+    availabilities: [{ type: String }],
     roles: [{ type: String }],
     announcements: [{ type: Schema.Types.ObjectId, ref: "Announcement" }],
     conversations: [{ type: Schema.Types.ObjectId, ref: "Conversation" }],

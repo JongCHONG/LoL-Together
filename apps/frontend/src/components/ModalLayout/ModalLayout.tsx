@@ -24,9 +24,13 @@ const ModalLayout = ({ open, onClose, children }: ModalProps) => (
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.8, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
-          <button className={ModalLayoutStyles.modal_close} onClick={onClose} aria-label="Fermer">
+          <button
+            className={ModalLayoutStyles.modal_close}
+            onClick={onClose}
+            aria-label="Fermer"
+          >
             ✕
           </button>
           {children}
