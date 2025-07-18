@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
 
-export interface RiotInfos {
+interface RiotInfos {
   profileIconId: number;
   summonerLevel: number;
   queueType: string;
@@ -16,6 +16,24 @@ export interface RiotInfos {
   gameEndTimestamp?: number; 
 }
 
+interface Availabilities {
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+  sunday: boolean;
+}
+
+interface roles {
+  TOP: boolean;
+  JUNGLE: boolean;
+  MID: boolean;
+  ADC: boolean;
+  SUPPORT: boolean;
+}
+
 export interface IUser extends Document {
   password: string;
   email: string;
@@ -27,8 +45,8 @@ export interface IUser extends Document {
   region?: string;
   languages?: string[];
   description?: string;
-  availabilities?: string[];
-  roles?: string[];
+  availabilities?: Availabilities;
+  roles?: roles;
   announcements?: Types.ObjectId[];
   conversations?: Types.ObjectId[];
   teams?: Types.ObjectId[];
@@ -46,8 +64,25 @@ const UserSchema = new Schema<IUser>(
     region: { type: String },
     languages: [{ type: String }],
     description: { type: String },
-    availabilities: [{ type: String }],
-    roles: [{ type: String }],
+    availabilities: {
+      monday: { type: Boolean, default: false },
+      tuesday: { type: Boolean, default: false },
+      wednesday: { type: Boolean, default: false },
+      thursday: { type: Boolean, default: false },
+      friday: { type: Boolean, default: false },
+      saturday: { type: Boolean, default: false },
+      sunday: { type: Boolean, default: false },
+    },
+    roles: {
+      type: Object,
+      default: {
+        TOP: false,
+        JUNGLE: false,
+        MID: false,
+        ADC: false,
+        SUPPORT: false,
+      },
+    },
     announcements: [{ type: Schema.Types.ObjectId, ref: "Announcement" }],
     conversations: [{ type: Schema.Types.ObjectId, ref: "Conversation" }],
     teams: [{ type: Schema.Types.ObjectId, ref: "Team" }],

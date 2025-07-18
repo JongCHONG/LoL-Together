@@ -8,6 +8,7 @@ import { Languages } from "../../utils/enums/languages";
 import { WeekDays } from "../../utils/enums/weekDays";
 import { LolRole } from "../../utils/enums/lolRole";
 import { useUser } from "../../contexts/UserContext";
+import { updateUser } from "../../utils/api/user";
 
 interface ModalProps {
   open: boolean;
@@ -15,27 +16,39 @@ interface ModalProps {
 }
 
 interface ModalFormValues {
-  langues: string[];
+  languages: string[];
   availabilities: Record<string, boolean>;
   discord: string;
   roles: Record<string, boolean>;
 }
 
 const Modal = ({ open, setOpen }: ModalProps) => {
-  const { user } = useUser();
-
+  const { user, refreshUser } = useUser();
 
   interface HandleSubmitProps {
     setOpen: (open: boolean) => void;
   }
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: ModalFormValues,
     { setOpen }: HandleSubmitProps
   ) => {
-    setOpen(false);
-
-
+    try {
+      if (!user?._id) {
+        console.error("User ID is undefined. Cannot update user.");
+        return;
+      }
+      await updateUser(user._id, {
+        languages: values.languages,
+        availabilities: values.availabilities,
+        discord: values.discord,
+        roles: values.roles,
+      });
+      await refreshUser();
+      setOpen(false);
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
   };
 
   return (
@@ -46,28 +59,27 @@ const Modal = ({ open, setOpen }: ModalProps) => {
 
         <Formik
           initialValues={{
-            langues: user?.languages || [],
-            availabilities: {
-              [WeekDays.monday]: false,
-              [WeekDays.tuesday]: false,
-              [WeekDays.wednesday]: false,
-              [WeekDays.thursday]: false,
-              [WeekDays.friday]: false,
-              [WeekDays.saturday]: false,
-              [WeekDays.sunday]: false,
+            languages: user?.languages || [],
+            availabilities: user?.availabilities || {
+              monday: false,
+              tuesday: false,
+              wednesday: false,
+              thursday: false,
+              friday: false,
+              saturday: false,
+              sunday: false,
             },
             discord: user?.discord || "N/A",
-            roles: {
-              [LolRole.TOP]: false,
-              [LolRole.JUNGLE]: false,
-              [LolRole.MID]: false,
-              [LolRole.ADC]: false,
-              [LolRole.SUPPORT]: false,
+            roles: user?.roles || {
+              TOP: false,
+              JUNGLE: false,
+              MID: false,
+              ADC: false,
+              SUPPORT: false,
             },
           }}
           onSubmit={(values) => {
-            console.log(values);
-            setOpen(false);
+            handleSubmit(values, { setOpen });
           }}
         >
           {({ values, handleSubmit, setFieldValue }) => (
@@ -81,12 +93,12 @@ const Modal = ({ open, setOpen }: ModalProps) => {
                 </div>
                 <Select
                   isMulti
-                  name="langues"
+                  name="languages"
                   options={Object.values(Languages).map((language) => ({
                     value: language,
                     label: language,
                   }))}
-                  value={values.langues.map((lang) => ({
+                  value={values.languages.map((lang) => ({
                     value: lang,
                     label: lang,
                   }))}
@@ -95,7 +107,7 @@ const Modal = ({ open, setOpen }: ModalProps) => {
                       const selectedValues = Array.isArray(selectedOptions)
                         ? selectedOptions.map((option) => option.value)
                         : [];
-                      setFieldValue("langues", selectedValues);
+                      setFieldValue("languages", selectedValues);
                     } catch (error) {
                       console.error(
                         "Erreur lors de la sélection des langues:",
@@ -112,19 +124,25 @@ const Modal = ({ open, setOpen }: ModalProps) => {
               <div className={ModalStyles.form_group}>
                 <div className={ModalStyles.form_title}>Disponibilités : </div>
                 <div className={ModalStyles.checkbox_group}>
-                  {Object.keys(values.availabilities).map((jour) => (
-                    <div key={jour}>
+                  {Object.entries(WeekDays).map(([dayKey, label]) => (
+                    <div key={dayKey}>
                       <Field
                         className={ModalStyles.checkbox}
                         type="checkbox"
-                        name={`availabilities.${jour}`}
+                        name={`availabilities.${dayKey}`}
                         checked={
                           values.availabilities[
-                            jour as unknown as keyof typeof values.availabilities
+                            dayKey as keyof typeof values.availabilities
                           ]
                         }
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          setFieldValue(
+                            `availabilities.${dayKey}`,
+                            e.target.checked
+                          );
+                        }}
                       />
-                      {jour.charAt(0).toUpperCase() + jour.slice(1)}
+                      {label}
                     </div>
                   ))}
                 </div>
@@ -155,20 +173,20 @@ const Modal = ({ open, setOpen }: ModalProps) => {
                 </div>
 
                 <div className={ModalStyles.checkbox_group}>
-                  {Object.values(LolRole).map((role) => (
-                    <div key={role}>
+                  {Object.entries(LolRole).map(([dayKey, label]) => (
+                    <div key={dayKey}>
                       <Field
                         className={ModalStyles.checkbox}
                         type="checkbox"
-                        name={`roles.${role}`}
+                        name={`roles.${dayKey}`}
                         checked={
-                          values.roles[role as keyof typeof values.roles]
+                          values.roles[dayKey as keyof typeof values.roles]
                         }
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setFieldValue(`roles.${role}`, e.target.checked);
+                          setFieldValue(`roles.${dayKey}`, e.target.checked);
                         }}
                       />
-                      {role}
+                      {label}
                     </div>
                   ))}
                 </div>

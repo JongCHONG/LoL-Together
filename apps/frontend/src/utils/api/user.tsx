@@ -21,7 +21,9 @@ export const fetchUsers = async (): Promise<User[]> => {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || "Erreur lors de la récupération des utilisateurs");
+      throw new Error(
+        data.message || "Erreur lors de la récupération des utilisateurs"
+      );
     }
 
     return data;
@@ -52,7 +54,9 @@ export const fetchUserById = async (userId: string): Promise<User> => {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || "Erreur lors de la récupération de l'utilisateur");
+      throw new Error(
+        data.message || "Erreur lors de la récupération de l'utilisateur"
+      );
     }
 
     return data;
@@ -62,4 +66,25 @@ export const fetchUserById = async (userId: string): Promise<User> => {
     }
     throw error;
   }
+};
+
+export const updateUser = async (
+  userId: string,
+  data: any,
+  token?: string // optionnel si tu utilises l'auth
+) => {
+  const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Erreur lors de la mise à jour de l'utilisateur");
+  }
+
+  return response.json();
 };

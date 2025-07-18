@@ -1,23 +1,48 @@
+export interface Availabilities {
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+  sunday: boolean;
+}
+
+export interface roles {
+  TOP: boolean;
+  JUNGLE: boolean;
+  MID: boolean;
+  ADC: boolean;
+  SUPPORT: boolean;
+}
+
+export interface RiotInfos {
+  profileIconId: number;
+  tier?: string;
+  rank?: string;
+  wins?: number;
+  losses?: number;
+  summonerLevel?: number;
+  queueType?: string;
+  gameEndTimestamp?: number;
+  leaguePoints?: number;
+  veteran?: boolean;
+  inactive?: boolean;
+  freshBlood?: boolean;
+  hotStreak?: boolean;
+}
+
 export interface User {
-  id: string;
+  _id: string;
   username: string;
   email: string;
   summonerName?: string;
   region?: string;
   languages?: string[];
-  availabilities?: string[];
-  roles?: string[];
+  availabilities?: Availabilities;
+  roles?: roles;
   teams?: Team[];
-  riot_infos: {
-    profileIconId: number;
-    tier?: string;
-    rank?: string;
-    wins?: number;
-    losses?: number;
-    summonerLevel?: number;
-    queueType?: string;
-    gameEndTimestamp?: number;
-  };
+  riot_infos?: RiotInfos;
   riot_id: string;
   tagline: string;
   discord?: string;

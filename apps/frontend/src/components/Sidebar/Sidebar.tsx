@@ -1,5 +1,5 @@
 import { QueueType } from "../../utils/enums/queueType";
-import { User } from "../../utils/types/api";
+import { RiotInfos, User } from "../../utils/types/api";
 
 import SidebarStyles from "./Sidebar.module.scss";
 
@@ -9,7 +9,7 @@ import { formatGameEndTime } from "../../utils/helpers/formatGameEndTime";
 interface SidebarProps {
   tagline: User["tagline"];
   riotId: User["riot_id"];
-  riotInfos: User["riot_infos"]; // Utilise le type riot_infos du User
+  riotInfos: RiotInfos
 }
 
 const Sidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {

@@ -5,17 +5,28 @@ import { useUser } from "../../contexts/UserContext";
 
 import UserInfosStyles from "./UserInfos.module.scss";
 import Modal from "../Modal/Modal";
-
+import { WeekDays } from "../../utils/enums/weekDays";
+import { LolRole } from "../../utils/enums/lolRole";
 
 const UserInfos = () => {
   const { user } = useUser();
   const [open, setOpen] = useState(false);
 
   const languages = user?.languages?.length ? user.languages.join(", ") : "N/A";
-  const availabilities = user?.availabilities?.length
-    ? user.availabilities.join(", ")
+  const availabilities = user?.availabilities
+    ? Object.entries(user.availabilities)
+        .filter(([_, value]) => value)
+        .map(([key]) => WeekDays[key as keyof typeof WeekDays] || key)
+        .join(", ") || "N/A"
     : "N/A";
-  const roles = user?.roles?.length ? user.roles.join(", ") : "N/A";
+
+  const roles =
+    user?.roles && typeof user.roles === "object"
+      ? Object.entries(user.roles)
+          .filter(([_, value]) => value)
+          .map(([key]) => LolRole[key as keyof typeof LolRole] || key)
+          .join(", ") || "N/A"
+      : "N/A";
   const teams = user?.teams?.length
     ? user.teams.map((team) => team.name).join(", ")
     : "Aucune équipes";
