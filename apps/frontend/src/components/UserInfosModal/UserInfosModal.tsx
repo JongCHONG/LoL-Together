@@ -2,13 +2,15 @@ import Select from "react-select";
 
 import { Field, Form, Formik } from "formik";
 import ModalLayout from "../ModalLayout/ModalLayout";
-import ModalStyles from "./Modal.module.scss";
+import ModalStyles from "./UserInfosModal.module.scss";
 
 import { Languages } from "../../utils/enums/languages";
 import { WeekDays } from "../../utils/enums/weekDays";
 import { LolRole } from "../../utils/enums/lolRole";
 import { useUser } from "../../contexts/UserContext";
 import { updateUser } from "../../utils/api/user";
+import { Availabilities } from "../../utils/types/api";
+import { roles } from "../../utils/types/api";
 
 interface ModalProps {
   open: boolean;
@@ -17,12 +19,12 @@ interface ModalProps {
 
 interface ModalFormValues {
   languages: string[];
-  availabilities: Record<string, boolean>;
+  availabilities: Availabilities;
   discord: string;
-  roles: Record<string, boolean>;
+  roles: roles;
 }
 
-const Modal = ({ open, setOpen }: ModalProps) => {
+const UserInfosModal = ({ open, setOpen }: ModalProps) => {
   const { user, refreshUser } = useUser();
 
   interface HandleSubmitProps {
@@ -212,4 +214,4 @@ const Modal = ({ open, setOpen }: ModalProps) => {
   );
 };
 
-export default Modal;
+export default UserInfosModal;

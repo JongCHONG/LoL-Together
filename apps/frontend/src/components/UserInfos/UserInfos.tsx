@@ -4,9 +4,10 @@ import { LiaEdit } from "react-icons/lia";
 import { useUser } from "../../contexts/UserContext";
 
 import UserInfosStyles from "./UserInfos.module.scss";
-import Modal from "../Modal/Modal";
+import UserInfosModal from "../UserInfosModal/UserInfosModal";
 import { WeekDays } from "../../utils/enums/weekDays";
 import { LolRole } from "../../utils/enums/lolRole";
+import { getRoleIcon } from "../../utils/helpers/getRoleIcon";
 
 const UserInfos = () => {
   const { user } = useUser();
@@ -24,9 +25,24 @@ const UserInfos = () => {
     user?.roles && typeof user.roles === "object"
       ? Object.entries(user.roles)
           .filter(([_, value]) => value)
-          .map(([key]) => LolRole[key as keyof typeof LolRole] || key)
-          .join(", ") || "N/A"
+          .map(([key]) => {
+            const roleName = LolRole[key as keyof typeof LolRole] || key;
+            const RoleIcon = getRoleIcon(key as keyof typeof LolRole);
+            return (
+              <span key={key} className={UserInfosStyles.role}>
+                {RoleIcon && (
+                  <img
+                    src={RoleIcon}
+                    alt={roleName}
+                    className={UserInfosStyles.img}
+                  />
+                )}
+                {roleName}
+              </span>
+            );
+          })
       : "N/A";
+
   const teams = user?.teams?.length
     ? user.teams.map((team) => team.name).join(", ")
     : "Aucune équipes";
@@ -57,7 +73,7 @@ const UserInfos = () => {
         </div>
       </div>
 
-      <Modal open={open} setOpen={setOpen} />
+      <UserInfosModal open={open} setOpen={setOpen} />
     </>
   );
 };
