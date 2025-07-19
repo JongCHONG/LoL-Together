@@ -7,11 +7,15 @@ import Menu from "../../components/Menu/Menu";
 
 import { fetchUsers } from "../../utils/api/user";
 import { User } from "../../utils/types/api";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../../contexts/UserContext";
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { currentUser } = useUser();
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -36,6 +40,14 @@ const Users = () => {
 
     loadUsers();
   }, []);
+
+  const handleContactClick = (userId: string) => {
+    if (currentUser?._id === userId) {
+      navigate("/dashboard");
+    } else {
+      navigate(`/user/${userId}`);
+    }
+  };
 
   return (
     <>
@@ -65,7 +77,7 @@ const Users = () => {
                   avatarUrl={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/${user.riot_infos?.profileIconId ?? 0}.png`}
                   showUserInfo={true}
                   enableTilt={true}
-                  onContactClick={() => console.log("Contact clicked")}
+                  onContactClick={() => handleContactClick(user._id)}
                 />
               ))
             ) : (

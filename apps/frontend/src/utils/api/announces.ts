@@ -25,6 +25,29 @@ export const createAnnounce = async (data: {
   }
 };
 
+export const updateAnnounce = async (
+  announceId: string,
+  data: { text: string }
+): Promise<Announce> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/announces/${announceId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const result: Announce = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 export const deleteAnnounce = async (announceId: string): Promise<void> => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/announces/${announceId}`, {

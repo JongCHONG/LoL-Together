@@ -7,6 +7,7 @@ import Users from "./pages/Users/Users";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { UserProvider } from "./contexts/UserContext";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 const App = () => {
   return (
@@ -22,6 +23,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/user/:id"
+            element={
+              <PrivateRoute>
+                <UserProfile />
               </PrivateRoute>
             }
           />

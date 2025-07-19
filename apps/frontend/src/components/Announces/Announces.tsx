@@ -18,25 +18,32 @@ interface AnnouncesProps {
 
 const Announces = ({ userId, announces }: AnnouncesProps) => {
   const [open, setOpen] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const { refreshUser } = useUser();
+  const [editAnnounce, setEditAnnounce] = useState<Announce | null>(null);
+  const { refreshUser, currentUser } = useUser();
 
   const handleDelete = async (id: string) => {
     await deleteAnnounce(id);
     refreshUser();
   };
 
+  const handleEdit = (announce: Announce) => {
+    setEditAnnounce(announce);
+    setOpen(true);
+  };
+
   return (
     <div className={AnnouncesStyles.container}>
       <div className={AnnouncesStyles.header}>
         <h3 className={AnnouncesStyles.title}>Annonces</h3>
-        <TfiAnnouncement
-          onClick={() => setOpen(true)}
-          size={24}
-          title="Modifier les informations"
-          cursor={"pointer"}
-          color="gold"
-        />
+        {currentUser?._id === userId && (
+          <TfiAnnouncement
+            onClick={() => setOpen(true)}
+            size={24}
+            title="Ajouter une annonce"
+            cursor={"pointer"}
+            color="gold"
+          />
+        )}
       </div>
       <div className={AnnouncesStyles.announcesList}>
         {announces.length > 0 ? (
@@ -48,30 +55,28 @@ const Announces = ({ userId, announces }: AnnouncesProps) => {
             )
             .map((announce, index) => (
               <div key={index} className={AnnouncesStyles.announce}>
-                {edit ? (
-                  <textarea
-                    className={AnnouncesStyles.textarea}
-                    value={announce.text}
-                    readOnly
-                  />
-                ) : (
-                  <p>{announce.text}</p>
-                )}
+                <p>{announce.text}</p>
+
                 <span className={AnnouncesStyles.date}>
-                  <LiaEdit
-                    onClick={() => setEdit(true)}
-                    size={20}
-                    title="Modifier l'annonce"
-                    cursor={"pointer"}
-                    color="blue"
-                  />
-                  <MdOutlineDeleteSweep
-                    onClick={() => handleDelete(announce._id)}
-                    size={20}
-                    title="Supprimer l'annonce"
-                    cursor={"pointer"}
-                    color="red"
-                  />
+                        {currentUser?._id === userId && (
+                  <>
+                    <LiaEdit
+                      onClick={() => handleEdit(announce)}
+                      size={20}
+                      title="Modifier l'annonce"
+                      cursor={"pointer"}
+                      color="gold"
+                    />
+                    <MdOutlineDeleteSweep
+                      onClick={() => handleDelete(announce._id)}
+                      size={20}
+                      title="Supprimer l'annonce"
+                      cursor={"pointer"}
+                      color="red"
+                    />
+                  </>
+                        )}
+
                   Publiée le {new Date(announce.createdAt).toLocaleString()}
                 </span>
               </div>
@@ -82,7 +87,7 @@ const Announces = ({ userId, announces }: AnnouncesProps) => {
           </center>
         )}
       </div>
-      <AnnounceModal open={open} setOpen={setOpen} userId={userId} />
+      <AnnounceModal open={open} setOpen={setOpen} userId={userId} editAnnounce={editAnnounce} />
     </div>
   );
 };

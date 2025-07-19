@@ -8,22 +8,30 @@ import UserInfosModal from "../UserInfosModal/UserInfosModal";
 import { WeekDays } from "../../utils/enums/weekDays";
 import { LolRole } from "../../utils/enums/lolRole";
 import { getRoleIconByRole } from "../../utils/helpers/getRoleIconByRole";
+import { User } from "../../utils/types/api";
 
-const UserInfos = () => {
-  const { user } = useUser();
+interface UserInfosProps {
+  userProfile?: User | null;
+}
+
+const UserInfos = ({ userProfile }: UserInfosProps) => {
+  const { currentUser } = useUser();
   const [open, setOpen] = useState(false);
+  const profileData = userProfile || currentUser;
 
-  const languages = user?.languages?.length ? user.languages.join(", ") : "N/A";
-  const availabilities = user?.availabilities
-    ? Object.entries(user.availabilities)
+  const languages = profileData?.languages?.length
+    ? profileData.languages.join(", ")
+    : "N/A";
+  const availabilities = profileData?.availabilities
+    ? Object.entries(profileData.availabilities)
         .filter(([_, value]) => value)
         .map(([key]) => WeekDays[key as keyof typeof WeekDays] || key)
         .join(", ") || "N/A"
     : "N/A";
 
   const roles =
-    user?.roles && typeof user.roles === "object"
-      ? Object.entries(user.roles)
+    profileData?.roles && typeof profileData.roles === "object"
+      ? Object.entries(profileData.roles)
           .filter(([_, value]) => value)
           .map(([key]) => {
             const roleName = LolRole[key as keyof typeof LolRole] || key;
@@ -43,8 +51,8 @@ const UserInfos = () => {
           })
       : "N/A";
 
-  const teams = user?.teams?.length
-    ? user.teams.map((team) => team.name).join(", ")
+  const teams = profileData?.teams?.length
+    ? profileData.teams.map((team) => team.name).join(", ")
     : "Aucune équipes";
 
   return (
@@ -52,13 +60,15 @@ const UserInfos = () => {
       <div className={UserInfosStyles.container}>
         <div className={UserInfosStyles.header}>
           <h3 className={UserInfosStyles.title}>Informations</h3>
-          <LiaEdit
-            onClick={() => setOpen(true)}
-            size={24}
-            title="Modifier les informations"
-            cursor={"pointer"}
-            color="gold"
-          />
+          {currentUser?._id === profileData?._id && (
+            <LiaEdit
+              onClick={() => setOpen(true)}
+              size={24}
+              title="Modifier les informations"
+              cursor={"pointer"}
+              color="gold"
+            />
+          )}
         </div>
         <div className={UserInfosStyles.user_panel}>
           <div className={UserInfosStyles.user_info}>
@@ -68,7 +78,7 @@ const UserInfos = () => {
           </div>
           <div className={UserInfosStyles.user_info}>
             <div>Équipe(s) : {teams}</div>
-            <div>Discord: {user?.discord}</div>
+            <div>Discord: {profileData?.discord}</div>
           </div>
         </div>
       </div>

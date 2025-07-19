@@ -11,8 +11,8 @@ import { decodeToken } from "react-jwt";
 import { DecodedToken } from "../utils/types/auth";
 
 interface UserContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  currentUser: User | null;
+  setCurrentUser: (currentUser: User | null) => void;
   isLoading: boolean;
   refreshUser: () => Promise<void>;
 }
@@ -20,7 +20,7 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const refreshUser = async () => {
@@ -33,12 +33,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         
         if (decodedToken?.userId) {
           const userData = await fetchUserById(decodedToken.userId);
-          setUser(userData);
+          setCurrentUser(userData);
         }
       }
     } catch (error) {
       console.error("Erreur lors de la récupération des données utilisateur:", error);
-      setUser(null);
+      setCurrentUser(null);
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +49,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading, refreshUser }}>
+    <UserContext.Provider value={{ currentUser, setCurrentUser, isLoading, refreshUser }}>
       {children}
     </UserContext.Provider>
   );
