@@ -1,25 +1,67 @@
 .container {
-  border-right: 1px solid gold;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  padding-right: 50px;
-
-  h3 {
-    font-size: 24px;
-    color: white;
-    font-family: "Merienda";
-    margin-top: 20px;
+  .content[data-tier="BRONZE"] {
+    background-image: url("../../assets/banners/Bronze_Banner.png");
   }
-  .avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin: 30px 0;
+  .content[data-tier="SILVER"] {
+    background-image: url("../../assets/banners/Silver_Banner.png");
   }
-  .emblem {
-    width: 80px;
-    margin: 30px 0;
+  .content[data-tier="GOLD"] {
+    background-image: url("../../assets/banners/Gold_Banner.png");
+  }
+  .content[data-tier="PLATINUM"] {
+    background-image: url("../../assets/banners/Platinum_Banner.png");
+  }
+  .content[data-tier="DIAMOND"] {
+    background-image: url("../../assets/banners/Diamond_Banner.png");
+  }
+  .content[data-tier="MASTER"] {
+    background-image: url("../../assets/banners/Master_Banner.png");
+  }
+  .content[data-tier="GRANDMASTER"] {
+    background-image: url("../../assets/banners/Grandmaster_Banner.png");
+  }
+  .content[data-tier="CHALLENGER"] {
+    background-image: url("../../assets/banners/Challenger_Banner.png");
+  }
+  .content[data-tier="IRON"] {
+    background-image: url("../../assets/banners/Iron_Banner.png");
+  }
+  .content[data-tier="EMERALD"] {
+    background-image: url("../../assets/banners/Emerald_Banner.png");
+  }
+  .content[data-tier="UNRANKED"] {
+    background-image: url("../../assets/banners/Unranked.png");
+  }
+  .content[data-tier="DEFAULT"] {
+    background-image: url("../../assets/banners/Default_Banner.png");
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 240px;
+    height: 530px;
+    background-image: url("../../assets/banners/Bronze_Banner.png");
+    background-size: cover;
+    background-position: center;
+    h3 {
+      font-size: 24px;
+      color: white;
+      font-family: "Merienda";
+    }
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 30px 0;
+    }
+    .emblem {
+      width: 80px;
+      margin-top: 10px;
+    }
+  }
+  .tierRankQueueType {
+    text-align: center;
   }
 }

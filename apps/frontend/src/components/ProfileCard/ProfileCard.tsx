@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import { FaDiscord } from "react-icons/fa6";
 
 import "./ProfileCard.css";
+import { getIconBorderByTier, Tier } from "../../utils/helpers/getIconBorderByTier";
 
 interface ProfileCardProps {
   avatarUrl: string;
@@ -21,6 +22,7 @@ interface ProfileCardProps {
   showUserInfo?: boolean;
   wins?: number;
   losses?: number;
+  rank?: string;
   onContactClick?: () => void;
 }
 
@@ -74,6 +76,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   onContactClick,
   wins = 0,
   losses = 0,
+  rank = "",
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -263,7 +266,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   const handleContactClick = useCallback(() => {
     onContactClick?.();
   }, [onContactClick]);
-
+  
   return (
     <div
       ref={wrapRef}
@@ -275,16 +278,10 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
           <div className="pc-shine" />
           <div className="pc-glare" />
           <div className="pc-content pc-avatar-content">
-            <img
-              className="avatar"
-              src={avatarUrl}
-              alt={`${name || "User"} avatar`}
-              loading="lazy"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = "none";
-              }}
-            />
+            <div className="pc-avatar-bg">
+              <img src={getIconBorderByTier(tier as Tier) ?? undefined} alt="avatar background" />
+            </div>
+            <img className="avatar" src={avatarUrl} alt="avatar" />
 
             {showUserInfo && (
               <div className="pc-user-info">
@@ -306,7 +303,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                       <FaDiscord />
                       {handle}
                     </div>
-                    <div className="pc-status">{tier}</div>
+                    <div className="pc-status">{tier} {rank}</div>
                   </div>
                 </div>
                 <button

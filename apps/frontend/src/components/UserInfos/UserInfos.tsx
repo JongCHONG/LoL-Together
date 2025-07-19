@@ -7,7 +7,7 @@ import UserInfosStyles from "./UserInfos.module.scss";
 import UserInfosModal from "../UserInfosModal/UserInfosModal";
 import { WeekDays } from "../../utils/enums/weekDays";
 import { LolRole } from "../../utils/enums/lolRole";
-import { getRoleIcon } from "../../utils/helpers/getRoleIcon";
+import { getRoleIconByRole } from "../../utils/helpers/getRoleIconByRole";
 
 const UserInfos = () => {
   const { user } = useUser();
@@ -27,7 +27,7 @@ const UserInfos = () => {
           .filter(([_, value]) => value)
           .map(([key]) => {
             const roleName = LolRole[key as keyof typeof LolRole] || key;
-            const RoleIcon = getRoleIcon(key as keyof typeof LolRole);
+            const RoleIcon = getRoleIconByRole(key as keyof typeof LolRole);
             return (
               <span key={key} className={UserInfosStyles.role}>
                 {RoleIcon && (

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { User } from "../../utils/types/api";
-import ProfileCard from "../../components/ProfileCard/ProfileCard";
-
 import UsersStyles from "./Users.module.scss";
+
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import Menu from "../../components/Menu/Menu";
+
 import { fetchUsers } from "../../utils/api/user";
+import { User } from "../../utils/types/api";
 
 const Users = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -56,15 +57,12 @@ const Users = () => {
                   name={user.riot_id}
                   title={`#${user.tagline}`}
                   handle={user.discord || "N/A"}
-                  wins={user.riot_infos.wins || 0}
-                  losses={user.riot_infos.losses || 0}
-                  tier={
-                    user.riot_infos.tier && user.riot_infos.rank
-                      ? `${user.riot_infos.tier} ${user.riot_infos.rank}`
-                      : "Non classé"
-                  }
+                  wins={user.riot_infos?.wins ?? 0}
+                  losses={user.riot_infos?.losses ?? 0}
+                  tier={user.riot_infos?.tier || "Unranked"}
+                  rank={user.riot_infos?.rank || ""}
                   contactText="Voir plus"
-                  avatarUrl={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/${user.riot_infos.profileIconId}.png`}
+                  avatarUrl={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/${user.riot_infos?.profileIconId ?? 0}.png`}
                   showUserInfo={true}
                   enableTilt={true}
                   onContactClick={() => console.log("Contact clicked")}

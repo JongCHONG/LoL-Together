@@ -264,18 +264,36 @@
 }
 
 .pc-avatar-content {
+  position: relative;
   mix-blend-mode: screen;
   overflow: hidden;
 }
 
+.pc-avatar-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.pc-avatar-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .pc-avatar-content .avatar {
-  width: 50%;
+  border-radius: 50%;
   position: absolute;
   left: 50%;
+  top: 47%;
+  width: 36%;
   transform: translateX(-50%) scale(1);
-  top: 30%;
+  z-index: 1;
   opacity: calc(1.75 - var(--pointer-from-center));
-  filter: grayscale(1); /* Utilisez filter au lieu de mix-blend-mode */
+  filter: grayscale(1);
 }
 
 .pc-card:hover .pc-avatar-content .avatar,
