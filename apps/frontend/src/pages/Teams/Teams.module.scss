@@ -1,6 +1,5 @@
 .banner {
-  background: url("../../assets/backgrounds/user-ahri.jpg")
-    no-repeat;
+  background: url("../../assets/backgrounds/teams.jpeg") no-repeat;
   background-size: cover;
   height: 60vh;
   position: relative;
@@ -17,7 +16,7 @@
     left: 25%;
     transform: translate(-50%, -50%);
   }
-
+  
   &::after {
     content: "";
     position: absolute;
@@ -31,11 +30,12 @@
 }
 
 .container {
-  margin: 50px auto;
-  width: 80%;
-  display: flex;
-  .content {
-    width: 100%;
-    margin-left: 50px;
+  .teamsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 20px;
   }
 }

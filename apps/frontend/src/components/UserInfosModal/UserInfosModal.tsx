@@ -11,11 +11,7 @@ import { useUser } from "../../contexts/UserContext";
 import { updateUser } from "../../utils/api/user";
 import { Availabilities } from "../../utils/types/api";
 import { roles } from "../../utils/types/api";
-
-interface UserInfosModalProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
+import { ModalProps } from "../../utils/types/modal";
 
 interface ModalFormValues {
   languages: string[];
@@ -24,23 +20,23 @@ interface ModalFormValues {
   roles: roles;
 }
 
-const UserInfosModal = ({ open, setOpen }: UserInfosModalProps) => {
-  const { user, refreshUser } = useUser();
+interface HandleSubmitProps {
+  setOpen: (open: boolean) => void;
+}
 
-  interface HandleSubmitProps {
-    setOpen: (open: boolean) => void;
-  }
+const UserInfosModal = ({ open, setOpen }: ModalProps) => {
+  const { currentUser, refreshUser } = useUser();
 
   const handleSubmit = async (
     values: ModalFormValues,
     { setOpen }: HandleSubmitProps
   ) => {
     try {
-      if (!user?._id) {
-        console.error("User ID is undefined. Cannot update user.");
+      if (!currentUser?._id) {
+        console.error("User ID is undefined. Cannot update currentUser.");
         return;
       }
-      await updateUser(user._id, {
+      await updateUser(currentUser._id, {
         languages: values.languages,
         availabilities: values.availabilities,
         discord: values.discord,
@@ -49,7 +45,7 @@ const UserInfosModal = ({ open, setOpen }: UserInfosModalProps) => {
       await refreshUser();
       setOpen(false);
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error("Error updating currentUser:", error);
     }
   };
 
@@ -61,8 +57,8 @@ const UserInfosModal = ({ open, setOpen }: UserInfosModalProps) => {
 
         <Formik
           initialValues={{
-            languages: user?.languages || [],
-            availabilities: user?.availabilities || {
+            languages: currentUser?.languages || [],
+            availabilities: currentUser?.availabilities || {
               monday: false,
               tuesday: false,
               wednesday: false,
@@ -71,8 +67,8 @@ const UserInfosModal = ({ open, setOpen }: UserInfosModalProps) => {
               saturday: false,
               sunday: false,
             },
-            discord: user?.discord || "N/A",
-            roles: user?.roles || {
+            discord: currentUser?.discord || "N/A",
+            roles: currentUser?.roles || {
               TOP: false,
               JUNGLE: false,
               MID: false,

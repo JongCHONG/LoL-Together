@@ -6,11 +6,10 @@ import AnnounceModalStyles from "./AnnouncesModal.module.scss";
 import { createAnnounce, updateAnnounce } from "../../utils/api/announces";
 import { Announce, User } from "../../utils/types/api";
 import { useUser } from "../../contexts/UserContext";
+import { ModalProps } from "../../utils/types/modal";
 
-interface AnnounceModalProps {
+interface AnnounceModalProps extends ModalProps {
   userId: User["_id"];
-  open: boolean;
-  setOpen: (open: boolean) => void;
   editAnnounce: Announce | null;
 }
 

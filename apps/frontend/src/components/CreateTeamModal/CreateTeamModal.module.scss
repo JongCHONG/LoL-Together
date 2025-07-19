@@ -1,0 +1,70 @@
+.modal_title {
+  font-size: 24px;
+  color: black;
+  font-family: "Merienda";
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px 0;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-weight: 600;
+    color: black;
+    margin-bottom: 2px;
+    font-size: 1.05rem;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: white;
+    color: black;
+    font-size: 1rem;
+    transition: border 0.2s;
+    outline: none;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border: 1.5px solid #ffd700;
+  }
+
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  button[type="submit"] {
+    margin-top: 10px;
+    background: linear-gradient(90deg, #ffd700 60%, #ffb300 100%);
+    color: #181a20;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      color 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  button[type="submit"]:hover {
+    background: linear-gradient(90deg, #ffb300 60%, #ffd700 100%);
+    color: #23262f;
+  }
+}

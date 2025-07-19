@@ -16,7 +16,7 @@ interface UserInfosProps {
 
 const UserInfos = ({ userProfile }: UserInfosProps) => {
   const { currentUser } = useUser();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const profileData = userProfile || currentUser;
 
   const languages = profileData?.languages?.length

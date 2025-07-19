@@ -35,7 +35,7 @@
     transition: border 0.2s;
   }
   .form_field:focus {
-    border: 1px solid #8ea6fe;
+    border: 1.5px solid #ffd700;
     outline: none;
     background: #fff;
   }
@@ -50,7 +50,7 @@
 }
 
 .save_button {
-  background: #4f64fa; // violet/bleu vif
+  background: linear-gradient(90deg, #ffd700 60%, #ffb300 100%);
   color: #fff;
   border: none;
   padding: 0.5rem 1.2rem;
@@ -63,7 +63,7 @@
 
   &:hover,
   &:focus {
-    background: #3950e6;
+    background: linear-gradient(90deg, #ffd700 60%, #ffb300 100%);
     box-shadow: 0 4px 20px rgba(79, 100, 250, 0.15);
     outline: none;
   }

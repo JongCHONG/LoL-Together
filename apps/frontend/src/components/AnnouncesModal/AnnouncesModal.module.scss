@@ -30,11 +30,11 @@
   outline: none;
 }
 .textarea:focus {
-  border: 1.5px solid #687bf4;
+  border: 1.5px solid #ffd700;
 }
 
 .submit_button {
-  background: #3950e6;
+  background: linear-gradient(90deg, #ffd700 60%, #ffb300 100%);
   color: white;
   font-weight: bold;
   border: none;

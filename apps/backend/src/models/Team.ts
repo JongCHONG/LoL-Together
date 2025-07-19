@@ -8,10 +8,10 @@ export interface ITeam extends Document {
   languages?: string[];
   region?: string;
   description?: string;
-  disponibilities?: string[];
+  availabilities?: string[];
   website?: string;
   users?: Types.ObjectId[];
-  announcements?: Types.ObjectId[];
+  announces?: Types.ObjectId[];
 }
 
 const TeamSchema = new Schema<ITeam>(
@@ -23,10 +23,10 @@ const TeamSchema = new Schema<ITeam>(
     languages: [{ type: String }],
     region: { type: String },
     description: { type: String },
-    disponibilities: [{ type: String }],
+    availabilities: [{ type: String }],
     website: { type: String },
     users: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    announcements: [{ type: Schema.Types.ObjectId, ref: "Announcement" }],
+    announces: [{ type: Schema.Types.ObjectId, ref: "Announces" }],
   },
   { timestamps: true }
 );

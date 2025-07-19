@@ -18,7 +18,7 @@ import { useUser } from "../../contexts/UserContext";
 const Login = () => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
-  const { setUser } = useUser();
+  const { setCurrentUser } = useUser();
 
   const handleSubmit = async (
     values: LoginCredentials,
@@ -33,7 +33,7 @@ const Login = () => {
       const decodedToken = decodeToken(data.token) as { userId: string };
 
       const user = await fetchUserById(decodedToken.userId);
-      setUser(user);
+      setCurrentUser(user);
 
       navigate("/dashboard");
     } catch (error) {
