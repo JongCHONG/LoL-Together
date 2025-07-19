@@ -1,0 +1,46 @@
+// AnnounceModal.module.scss
+
+.container {
+  border-radius: 18px;
+  min-width: 340px;
+}
+
+.modal_title {
+  font-size: 1.4rem;
+  color: black;
+  margin-bottom: 18px;
+  font-family: "Merienda";
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  color: black;
+  font-size: 1rem;
+  transition: border 0.2s;
+  outline: none;
+}
+.textarea:focus {
+  border: 1.5px solid #687bf4;
+}
+
+.submit_button {
+  background: #3950e6;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}

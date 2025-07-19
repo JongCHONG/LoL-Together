@@ -6,7 +6,9 @@ export class UserService {
   }
 
   static async getUserById(userId: string): Promise<IUser | null> {
-    return await User.findById(userId).select("-password");
+    return await User.findById(userId)
+      .select("-password")
+      .populate({ path: "announces", select: "-user" });
   }
 
   static async updateUser(

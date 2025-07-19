@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface Availabilities {
   monday: boolean;
   tuesday: boolean;
@@ -40,6 +42,7 @@ export interface User {
   region?: string;
   languages?: string[];
   availabilities?: Availabilities;
+  announces?: Announce[];
   roles?: roles;
   teams?: Team[];
   riot_infos?: RiotInfos;
@@ -60,6 +63,15 @@ export interface Team {
   updatedAt: string;
 }
 
+export interface Announce {
+  _id: string;
+  user?: Types.ObjectId;
+  text: string;
+  team?: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface Message {
   id: string;
   content: string;
@@ -74,16 +86,6 @@ export interface Conversation {
   name?: string;
   participants: User[];
   messages: Message[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Announce {
-  id: string;
-  title: string;
-  content: string;
-  authorId: string;
-  teamId: string;
   createdAt: string;
   updatedAt: string;
 }

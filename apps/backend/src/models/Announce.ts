@@ -22,14 +22,14 @@ AnnounceSchema.post("save", async (announce: IAnnounce) => {
     .model("User")
     .findOneAndUpdate(
       { _id: announce.user },
-      { $addToSet: { announcements: announce._id } }
+      { $addToSet: { announces: announce._id } }
     );
   
   await mongoose
     .model("Team")
     .findOneAndUpdate(
       { _id: announce.team },
-      { $addToSet: { announcements: announce._id } }
+      { $addToSet: { announces: announce._id } }
     );
 });
 
@@ -38,14 +38,14 @@ AnnounceSchema.post("findOneAndDelete", async (announce: IAnnounce) => {
     .model("User")
     .findOneAndUpdate(
       { _id: announce.user },
-      { $pull: { announcements: announce._id } }
+      { $pull: { announces: announce._id } }
     );
   
   await mongoose
     .model("Team")
     .findOneAndUpdate(
       { _id: announce.team },
-      { $pull: { announcements: announce._id } }
+      { $pull: { announces: announce._id } }
     );
 });
 

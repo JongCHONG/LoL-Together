@@ -4,7 +4,7 @@ import DashboardStyles from "./Dashboard.module.scss";
 import { useUser } from "../../contexts/UserContext";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import UserInfos from "../../components/UserInfos/UserInfos";
-import Announcements from "../../components/Announcements/Announcements";
+import Announces from "../../components/Announces/Announces";
 
 const Dashboard = () => {
   const { user } = useUser();
@@ -21,7 +21,7 @@ const Dashboard = () => {
         {user?.riot_infos && <Sidebar riotId={user.riot_id} tagline={user.tagline} riotInfos={user.riot_infos}/>}
         <div className={DashboardStyles.content}>
         {user?.riot_infos && <UserInfos />}
-        <Announcements />
+        <Announces userId={user?._id ?? ""} announces={user?.announces ?? []} />
 
         </div>
       </div>

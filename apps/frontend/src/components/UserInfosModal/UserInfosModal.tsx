@@ -12,7 +12,7 @@ import { updateUser } from "../../utils/api/user";
 import { Availabilities } from "../../utils/types/api";
 import { roles } from "../../utils/types/api";
 
-interface ModalProps {
+interface UserInfosModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
 }
@@ -24,7 +24,7 @@ interface ModalFormValues {
   roles: roles;
 }
 
-const UserInfosModal = ({ open, setOpen }: ModalProps) => {
+const UserInfosModal = ({ open, setOpen }: UserInfosModalProps) => {
   const { user, refreshUser } = useUser();
 
   interface HandleSubmitProps {
@@ -91,7 +91,7 @@ const UserInfosModal = ({ open, setOpen }: ModalProps) => {
                   className={ModalStyles.form_title}
                   style={{ marginRight: "32px" }}
                 >
-                  Langues :{" "}
+                  Langues :
                 </div>
                 <Select
                   isMulti
@@ -197,13 +197,6 @@ const UserInfosModal = ({ open, setOpen }: ModalProps) => {
               <div className={ModalStyles.form_actions}>
                 <button type="submit" className={ModalStyles.save_button}>
                   Sauvegarder
-                </button>
-                <button
-                  type="button"
-                  className={ModalStyles.cancel_button}
-                  onClick={() => handleSubmit()}
-                >
-                  Annuler
                 </button>
               </div>
             </Form>

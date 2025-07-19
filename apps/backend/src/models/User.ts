@@ -47,7 +47,7 @@ export interface IUser extends Document {
   description?: string;
   availabilities?: Availabilities;
   roles?: roles;
-  announcements?: Types.ObjectId[];
+  announces?: Types.ObjectId[];
   conversations?: Types.ObjectId[];
   teams?: Types.ObjectId[];
 }
@@ -83,7 +83,7 @@ const UserSchema = new Schema<IUser>(
         SUPPORT: false,
       },
     },
-    announcements: [{ type: Schema.Types.ObjectId, ref: "Announcement" }],
+    announces: [{ type: Schema.Types.ObjectId, ref: "Announce" }],
     conversations: [{ type: Schema.Types.ObjectId, ref: "Conversation" }],
     teams: [{ type: Schema.Types.ObjectId, ref: "Team" }],
   },

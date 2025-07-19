@@ -32,7 +32,7 @@ const Sidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
         {riotInfos.gameEndTimestamp && (
           <center>
             <div>
-              Dernière partie : <br />{" "}
+              Dernière partie : <br />
               {formatGameEndTime(riotInfos.gameEndTimestamp)}
             </div>
           </center>
