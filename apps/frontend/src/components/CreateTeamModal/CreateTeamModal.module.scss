@@ -4,23 +4,29 @@
   font-family: "Merienda";
 }
 
-.formGroup {
+.form_group {
+  color: black;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 18px 0;
+  gap: 10px;
 
-  div {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  .form_title {
+    font-size: 16px;
+    font-weight: 700;
   }
 
-  label {
-    font-weight: 600;
-    color: black;
-    margin-bottom: 2px;
-    font-size: 1.05rem;
+  .form_field {
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border 0.2s;
+  }
+  .form_field:focus {
+    border: 1.5px solid #ffd700;
+    outline: none;
+    background: #fff;
   }
 
   input,

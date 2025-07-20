@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
+import { Availabilities } from "./types";
 
 interface RiotInfos {
   profileIconId: number;
@@ -14,16 +15,6 @@ interface RiotInfos {
   freshBlood: boolean;
   hotStreak: boolean;
   gameEndTimestamp?: number; 
-}
-
-interface Availabilities {
-  monday: boolean;
-  tuesday: boolean;
-  wednesday: boolean;
-  thursday: boolean;
-  friday: boolean;
-  saturday: boolean;
-  sunday: boolean;
 }
 
 interface roles {

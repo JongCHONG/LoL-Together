@@ -1,10 +1,8 @@
-import Select from "react-select";
 
 import { Field, Form, Formik } from "formik";
 import ModalLayout from "../ModalLayout/ModalLayout";
 import ModalStyles from "./UserInfosModal.module.scss";
 
-import { Languages } from "../../utils/enums/languages";
 import { WeekDays } from "../../utils/enums/weekDays";
 import { LolRole } from "../../utils/enums/lolRole";
 import { useUser } from "../../contexts/UserContext";
@@ -12,6 +10,7 @@ import { updateUser } from "../../utils/api/user";
 import { Availabilities } from "../../utils/types/api";
 import { roles } from "../../utils/types/api";
 import { ModalProps } from "../../utils/types/modal";
+import LanguagesSelect from "../LanguagesSelect/LanguagesSelect";
 
 interface ModalFormValues {
   languages: string[];
@@ -82,42 +81,10 @@ const UserInfosModal = ({ open, setOpen }: ModalProps) => {
         >
           {({ values, handleSubmit, setFieldValue }) => (
             <Form onSubmit={handleSubmit}>
-              <div className={ModalStyles.form_group}>
-                <div
-                  className={ModalStyles.form_title}
-                  style={{ marginRight: "32px" }}
-                >
-                  Langues :
-                </div>
-                <Select
-                  isMulti
-                  name="languages"
-                  options={Object.values(Languages).map((language) => ({
-                    value: language,
-                    label: language,
-                  }))}
-                  value={values.languages.map((lang) => ({
-                    value: lang,
-                    label: lang,
-                  }))}
-                  onChange={(selectedOptions) => {
-                    try {
-                      const selectedValues = Array.isArray(selectedOptions)
-                        ? selectedOptions.map((option) => option.value)
-                        : [];
-                      setFieldValue("languages", selectedValues);
-                    } catch (error) {
-                      console.error(
-                        "Erreur lors de la sélection des langues:",
-                        error
-                      );
-                      setFieldValue("langues", []);
-                    }
-                  }}
-                  placeholder="Sélectionnez vos langues..."
-                  noOptionsMessage={() => "Aucune langue trouvée"}
-                />
-              </div>
+              <LanguagesSelect
+                values={values}
+                setFieldValue={setFieldValue}
+              />
 
               <div className={ModalStyles.form_group}>
                 <div className={ModalStyles.form_title}>Disponibilités : </div>
