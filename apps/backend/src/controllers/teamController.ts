@@ -26,10 +26,10 @@ export const getTeamById = async (req: Request, res: Response) => {
 };
 
 export const createTeam = async (req: Request, res: Response) => {
-  const { leader_id, name } = req.body;
+  const data = req.body;
 
   try {
-    const team = await TeamService.createTeam(leader_id, name);
+    const team = await TeamService.createTeam(data);
 
     await team.save();
     res.status(201).json({ message: "Team created successfully", team });

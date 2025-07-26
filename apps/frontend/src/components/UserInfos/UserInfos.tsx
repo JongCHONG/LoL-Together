@@ -54,7 +54,7 @@ const UserInfos = ({ userProfile }: UserInfosProps) => {
   const teams = profileData?.teams?.length
     ? profileData.teams.map((team) => team.name).join(", ")
     : "Aucune équipes";
-
+  
   return (
     <>
       <div className={UserInfosStyles.container}>

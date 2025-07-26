@@ -8,6 +8,7 @@ export class UserService {
   static async getUserById(userId: string): Promise<IUser | null> {
     return await User.findById(userId)
       .select("-password")
+      .populate("teams", "name")
       .populate({ path: "announces", select: "-user" });
   }
 

@@ -2,13 +2,14 @@ import mongoose, { Document, Schema, Types } from "mongoose";
 import { Availabilities } from "./types";
 
 export interface ITeam extends Document {
-  leader_id: string;
+  leader: Types.ObjectId;
   name: string;
   logo?: string;
   website?: string;
   description?: string;
   discord?: string;
   languages?: string[];
+  status?: string;
   region?: string[];
   availabilities?: Availabilities[];
   users?: Types.ObjectId[];
@@ -17,10 +18,11 @@ export interface ITeam extends Document {
 
 const TeamSchema = new Schema<ITeam>(
   {
-    leader_id: { type: String, required: true },
+    leader: { type: Schema.Types.ObjectId, ref: "User" },
     name: { type: String, required: true, unique: true },
     logo: { type: String },
     languages: [{ type: String }],
+    status: { type: String, default: "active" },
     region: [{ type: String }],
     description: { type: String },
     availabilities: {
@@ -43,8 +45,8 @@ const TeamSchema = new Schema<ITeam>(
 TeamSchema.post("save", async (team: ITeam) => {
   await mongoose
     .model("User")
-    .findByIdAndUpdate(team.leader_id, { $addToSet: { teams: team._id } });
-  console.log(`Team ${team._id} added to leader ${team.leader_id}.`);
+    .findByIdAndUpdate(team.leader, { $addToSet: { teams: team._id } });
+  console.log(`Team ${team._id} added to leader ${team.leader}.`);
 });
 
 TeamSchema.post("findOneAndDelete", async (team: ITeam) => {

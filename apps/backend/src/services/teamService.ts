@@ -5,18 +5,16 @@ import User from "../models/User";
 
 export class TeamService {
  static async getAllTeams(): Promise<ITeam[]> {
-    return await Team.find();
+    return await Team.find().populate("leader", "riot_id");
   }
 
  static async getTeamById(teamId: string): Promise<ITeam | null> {
     return await Team.findById(teamId).populate("users", "-password");
   }
 
- static async createTeam(leaderId: string, name: string): Promise<ITeam> {
+ static async createTeam(data: Partial<ITeam>): Promise<ITeam> {
     const team = new Team({
-      leader_id: leaderId,
-      name,
-      users: [leaderId],
+      ...data,
     });
     return await team.save();
   }
