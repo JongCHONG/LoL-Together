@@ -51,3 +51,23 @@ export const fetchTeams = async (): Promise<Team[]> => {
     throw error;
   }
 };
+
+export const fetchTeamById = async (teamId: string): Promise<Team> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/teams/${teamId}`);
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || "Erreur lors de la récupération de l'équipe");
+    }
+
+    const team: Team = await response.json();
+    
+    return team;
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Impossible de se connecter au serveur");
+    }
+    throw error;
+  }
+};

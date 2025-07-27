@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
@@ -17,35 +17,38 @@ const Register = () => {
   const navigate = useNavigate();
   const [signupError, setSignupError] = useState("");
 
-  const handleSubmit = async (
-    values: FormValues,
-    { setSubmitting }: FormikHelpers<FormValues>
-  ) => {
-    try {
-      setSignupError("");
+  const handleSubmit = useCallback(
+    async (
+      values: FormValues,
+      { setSubmitting }: FormikHelpers<FormValues>
+    ) => {
+      try {
+        setSignupError("");
 
-      const credentials = {
-        email: values.email,
-        password: values.password,
-        riot_id: values.riot_id,
-        tagline: values.tagline,
-      };
+        const credentials = {
+          email: values.email,
+          password: values.password,
+          riot_id: values.riot_id,
+          tagline: values.tagline,
+        };
 
-      const data = await registerUser(credentials);
+        const data = await registerUser(credentials);
 
-      console.log("Inscription réussie:", data);
-      navigate("/login");
-    } catch (error) {
-      console.error("Erreur lors de l'inscription:", error);
-      setSignupError(
-        error instanceof Error
-          ? error.message
-          : "Erreur de connexion au serveur"
-      );
-    } finally {
-      setSubmitting(false);
-    }
-  };
+        console.log("Inscription réussie:", data);
+        navigate("/login");
+      } catch (error) {
+        console.error("Erreur lors de l'inscription:", error);
+        setSignupError(
+          error instanceof Error
+            ? error.message
+            : "Erreur de connexion au serveur"
+        );
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [navigate]
+  );
 
   return (
     <>

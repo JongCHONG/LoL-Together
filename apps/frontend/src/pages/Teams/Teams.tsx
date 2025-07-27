@@ -1,7 +1,9 @@
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import TeamsStyles from "./Teams.module.scss";
 
 import Menu from "../../components/Menu/Menu";
-import { useEffect, useState } from "react";
 import { fetchTeams } from "../../utils/api/team";
 
 import { Team } from "../../utils/types/api";
@@ -13,6 +15,7 @@ const Teams = () => {
   const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadTeams = async () => {
@@ -37,6 +40,10 @@ const Teams = () => {
 
     loadTeams();
   }, []);
+
+  const handleContactClick = useCallback((teamId: string) => {
+    navigate(`/team/${teamId}`);
+  }, [navigate]);
 
   return (
     <>
@@ -64,9 +71,9 @@ const Teams = () => {
                   avatarUrl={team.logo || defaultAvatar}
                   showUserInfo={true}
                   enableTilt={true}
-                  membersCount={(team.users ? team.users.length + 1 : 1)}
+                  membersCount={team.users ? team.users.length + 1 : 1}
                   status={team.status || "active"}
-                  onContactClick={() => team}
+                  onContactClick={() => handleContactClick(team._id)}
                 />
               ))
             ) : (

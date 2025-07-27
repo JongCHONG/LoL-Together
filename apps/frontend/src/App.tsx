@@ -11,6 +11,7 @@ import { UserProvider } from "./contexts/UserContext";
 
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import UserProfile from "./components/UserProfile/UserProfile";
+import TeamProfile from "./components/TeamProfile/TeamProfile";
 
 const App = () => {
   return (
@@ -35,6 +36,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <UserProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/team/:id"
+            element={
+              <PrivateRoute>
+                <TeamProfile />
               </PrivateRoute>
             }
           />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 
@@ -20,33 +20,36 @@ const Login = () => {
   const [loginError, setLoginError] = useState("");
   const { setCurrentUser } = useUser();
 
-  const handleSubmit = async (
-    values: LoginCredentials,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    try {
-      setLoginError("");
+  const handleSubmit = useCallback(
+    async (
+      values: LoginCredentials,
+      { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+    ) => {
+      try {
+        setLoginError("");
 
-      const data = await loginUser(values);
+        const data = await loginUser(values);
 
-      localStorage.setItem("authToken", data.token);
-      const decodedToken = decodeToken(data.token) as { userId: string };
+        localStorage.setItem("authToken", data.token);
+        const decodedToken = decodeToken(data.token) as { userId: string };
 
-      const user = await fetchUserById(decodedToken.userId);
-      setCurrentUser(user);
+        const user = await fetchUserById(decodedToken.userId);
+        setCurrentUser(user);
 
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("Erreur lors de la connexion:", error);
-      setLoginError(
-        error instanceof Error
-          ? error.message
-          : "Erreur de connexion au serveur"
-      );
-    } finally {
-      setSubmitting(false);
-    }
-  };
+        navigate("/dashboard");
+      } catch (error) {
+        console.error("Erreur lors de la connexion:", error);
+        setLoginError(
+          error instanceof Error
+            ? error.message
+            : "Erreur de connexion au serveur"
+        );
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [navigate, setCurrentUser]
+  );
 
   return (
     <>

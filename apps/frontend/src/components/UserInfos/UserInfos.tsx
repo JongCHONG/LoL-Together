@@ -1,14 +1,16 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { LiaEdit } from "react-icons/lia";
 
 import { useUser } from "../../contexts/UserContext";
 
 import UserInfosStyles from "./UserInfos.module.scss";
 import UserInfosModal from "../UserInfosModal/UserInfosModal";
-import { WeekDays } from "../../utils/enums/weekDays";
 import { LolRole } from "../../utils/enums/lolRole";
 import { getRoleIconByRole } from "../../utils/helpers/getRoleIconByRole";
 import { User } from "../../utils/types/api";
+import { formatLanguages } from "../../utils/helpers/formatLanguages";
+import { formatAvailabilities } from "../../utils/helpers/formatAvailabilities";
 
 interface UserInfosProps {
   userProfile?: User | null;
@@ -19,15 +21,10 @@ const UserInfos = ({ userProfile }: UserInfosProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const profileData = userProfile || currentUser;
 
-  const languages = profileData?.languages?.length
-    ? profileData.languages.join(", ")
-    : "N/A";
-  const availabilities = profileData?.availabilities
-    ? Object.entries(profileData.availabilities)
-        .filter(([_, value]) => value)
-        .map(([key]) => WeekDays[key as keyof typeof WeekDays] || key)
-        .join(", ") || "N/A"
-    : "N/A";
+  const languages = formatLanguages(profileData?.languages || []);
+  const availabilities = formatAvailabilities({
+    availabilities: profileData?.availabilities ?? undefined,
+  });
 
   const roles =
     profileData?.roles && typeof profileData.roles === "object"
@@ -52,9 +49,16 @@ const UserInfos = ({ userProfile }: UserInfosProps) => {
       : "N/A";
 
   const teams = profileData?.teams?.length
-    ? profileData.teams.map((team) => team.name).join(", ")
+    ? profileData.teams.map((team, idx) => (
+        <span key={team._id}>
+          <Link to={`/team/${team._id}`} className={UserInfosStyles.team_link}>
+            {team.name}
+          </Link>
+          {idx < (profileData.teams?.length ?? 0) - 1 && ", "}
+        </span>
+      ))
     : "Aucune équipes";
-  
+
   return (
     <>
       <div className={UserInfosStyles.container}>

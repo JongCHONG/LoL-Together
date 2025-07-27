@@ -1,0 +1,44 @@
+.container {
+  width: 100%;
+  border-bottom: 1px solid gold;
+  padding-bottom: 50px;
+  margin-top: 50px;
+
+  .header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h3 {
+      font-size: 24px;
+      color: white;
+      font-family: "Merienda";
+    }
+  }
+  .user_panel {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+
+    .user_info {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .role {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 8px;
+        vertical-align: middle;
+
+        .img {
+          width: 20px;
+          height: 20px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}

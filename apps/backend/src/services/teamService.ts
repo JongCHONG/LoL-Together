@@ -4,22 +4,24 @@ import Team, { ITeam } from "../models/Team";
 import User from "../models/User";
 
 export class TeamService {
- static async getAllTeams(): Promise<ITeam[]> {
+  static async getAllTeams(): Promise<ITeam[]> {
     return await Team.find().populate("leader", "riot_id");
   }
 
- static async getTeamById(teamId: string): Promise<ITeam | null> {
-    return await Team.findById(teamId).populate("users", "-password");
+  static async getTeamById(teamId: string): Promise<ITeam | null> {
+    return await Team.findById(teamId)
+      .populate("users", "-password")
+      .populate("leader", "riot_id");
   }
 
- static async createTeam(data: Partial<ITeam>): Promise<ITeam> {
+  static async createTeam(data: Partial<ITeam>): Promise<ITeam> {
     const team = new Team({
       ...data,
     });
     return await team.save();
   }
 
- static async updateTeam(
+  static async updateTeam(
     teamId: string,
     updateData: Partial<ITeam>
   ): Promise<ITeam | null> {
@@ -30,11 +32,11 @@ export class TeamService {
     });
   }
 
- static async deleteTeam(teamId: string): Promise<ITeam | null> {
+  static async deleteTeam(teamId: string): Promise<ITeam | null> {
     return await Team.findByIdAndDelete(teamId);
   }
 
- static async addUserToTeam(userId: string, teamId: string) {
+  static async addUserToTeam(userId: string, teamId: string) {
     if (
       !mongoose.Types.ObjectId.isValid(userId) ||
       !mongoose.Types.ObjectId.isValid(teamId)
@@ -55,7 +57,7 @@ export class TeamService {
     );
   }
 
- static async removeUserFromTeam(userId: string, teamId: string) {
+  static async removeUserFromTeam(userId: string, teamId: string) {
     if (
       !mongoose.Types.ObjectId.isValid(userId) ||
       !mongoose.Types.ObjectId.isValid(teamId)
@@ -76,4 +78,3 @@ export class TeamService {
     );
   }
 }
-

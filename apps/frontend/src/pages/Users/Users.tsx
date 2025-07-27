@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import UsersStyles from "./Users.module.scss";
 
@@ -41,13 +41,16 @@ const Users = () => {
     loadUsers();
   }, []);
 
-  const handleContactClick = (userId: string) => {
-    if (currentUser?._id === userId) {
-      navigate("/dashboard");
-    } else {
-      navigate(`/user/${userId}`);
-    }
-  };
+  const handleContactClick = useCallback(
+    (userId: string) => {
+      if (currentUser?._id === userId) {
+        navigate("/dashboard");
+      } else {
+        navigate(`/user/${userId}`);
+      }
+    },
+    [currentUser, navigate]
+  );
 
   return (
     <>

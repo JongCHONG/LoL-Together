@@ -320,7 +320,7 @@ const TeamCardComponent: React.FC<TeamCardProps> = ({
             <div className="pc-details">
               <h3>{name}</h3>
               <p style={{marginTop: "50px"}}>Leader : {title}</p>
-              <p>Members : {membersCount}</p>
+              <p>Membres : {membersCount}</p>
               <p>Status : {status}</p>
             </div>
           </div>

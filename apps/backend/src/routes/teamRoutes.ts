@@ -7,6 +7,7 @@ import {
   deleteTeam,
   addUserToTeam,
   removeUserFromTeam,
+  getTeamById,
 } from "../controllers/teamController";
 import { checkTeamNameExists } from "../middlewares/checkTeamNameExists";
 import { checkUserInTeam, checkUserNotInTeam } from "../middlewares/checkUserInTeam";
@@ -14,7 +15,7 @@ import { checkUserInTeam, checkUserNotInTeam } from "../middlewares/checkUserInT
 const router = Router();
 
 router.get("/list", getAllTeams);
-router.get("/:teamId", getAllTeams as RequestHandler);
+router.get("/:teamId", getTeamById as RequestHandler);
 router.post("/create", checkTeamNameExists, createTeam as RequestHandler);
 router.put("/:teamId", updateTeam as RequestHandler);
 router.delete("/:teamId", deleteTeam as RequestHandler);

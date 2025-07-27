@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { fetchUserById } from "../../utils/api/user";
 import { User } from "../../utils/types/api";
 import Menu from "../Menu/Menu";
-import Sidebar from "../Sidebar/Sidebar";
+import UserSidebar from "../UserSidebar/UserSidebar";
 import UserInfos from "../UserInfos/UserInfos";
 import Announces from "../Announces/Announces";
 
@@ -38,7 +38,7 @@ const UserProfile = () => {
       </div>
       <div className={UserProfileStyles.container}>
         {userProfile?.riot_infos && (
-          <Sidebar
+          <UserSidebar
             riotId={userProfile.riot_id}
             tagline={userProfile.tagline}
             riotInfos={userProfile.riot_infos}

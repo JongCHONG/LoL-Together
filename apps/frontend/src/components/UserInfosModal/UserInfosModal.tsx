@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 
 import { Field, Form, Formik } from "formik";
 import ModalLayout from "../ModalLayout/ModalLayout";
@@ -25,28 +26,31 @@ interface HandleSubmitProps {
 
 const UserInfosModal = ({ open, setOpen }: ModalProps) => {
   const { currentUser, refreshUser } = useUser();
-
-  const handleSubmit = async (
-    values: ModalFormValues,
-    { setOpen }: HandleSubmitProps
-  ) => {
-    try {
-      if (!currentUser?._id) {
-        console.error("User ID is undefined. Cannot update currentUser.");
-        return;
+  
+  const handleSubmit = useCallback(
+    async (
+      values: ModalFormValues,
+      { setOpen }: HandleSubmitProps
+    ) => {
+      try {
+        if (!currentUser?._id) {
+          console.error("User ID is undefined. Cannot update currentUser.");
+          return;
+        }
+        await updateUser(currentUser._id, {
+          languages: values.languages,
+          availabilities: values.availabilities,
+          discord: values.discord,
+          roles: values.roles,
+        });
+        await refreshUser();
+        setOpen(false);
+      } catch (error) {
+        console.error("Error updating currentUser:", error);
       }
-      await updateUser(currentUser._id, {
-        languages: values.languages,
-        availabilities: values.availabilities,
-        discord: values.discord,
-        roles: values.roles,
-      });
-      await refreshUser();
-      setOpen(false);
-    } catch (error) {
-      console.error("Error updating currentUser:", error);
-    }
-  };
+    },
+    [currentUser, refreshUser]
+  );
 
   return (
     <ModalLayout open={open} onClose={() => setOpen(false)}>

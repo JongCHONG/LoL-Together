@@ -54,15 +54,18 @@ export interface User {
 }
 
 export interface Team {
+  _id: string;
   leader?: { _id: string; riot_id: string };
   name: string;
   website?: string;
   description?: string;
   discord?: string;
   languages?: string[];
+  availabilities?: Availabilities;
   logo?: string;
   status?: string;
   users?: Types.ObjectId[];
+  createdAt: string;
 }
 
 export interface Announce {

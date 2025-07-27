@@ -1,7 +1,7 @@
 import { QueueType } from "../../utils/enums/queueType";
 import { RiotInfos, User } from "../../utils/types/api";
 
-import SidebarStyles from "./Sidebar.module.scss";
+import UserSidebarStyles from "./UserSidebar.module.scss";
 
 import { getEmblemByTierRank } from "../../utils/helpers/getEmblemByTierRank";
 import { formatGameEndTime } from "../../utils/helpers/formatGameEndTime";
@@ -14,18 +14,18 @@ interface SidebarProps {
   riotInfos: RiotInfos;
 }
 
-const Sidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
+const UserSidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <>
-      <div className={SidebarStyles.container}>
+      <div className={UserSidebarStyles.container}>
         <div
-          className={SidebarStyles.content}
+          className={UserSidebarStyles.content}
           data-tier={riotInfos.tier ? riotInfos.tier.toUpperCase() : "UNRANKED"}
         >
           <img
-            className={SidebarStyles.avatar}
+            className={UserSidebarStyles.avatar}
             src={`https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/${riotInfos.profileIconId}.png`}
             alt="avatar"
           />
@@ -47,12 +47,12 @@ const Sidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
               <img
                 src={getEmblemByTierRank(riotInfos.tier) || undefined}
                 alt="emblem"
-                className={SidebarStyles.emblem}
+                className={UserSidebarStyles.emblem}
               />
             )}
           </div>
         </div>
-        <div className={SidebarStyles.tierRankQueueType}>
+        <div className={UserSidebarStyles.tierRankQueueType}>
           <div>
             {riotInfos.tier || "N/A"} {riotInfos.rank || "N/A"}
           </div>
@@ -62,7 +62,7 @@ const Sidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
           </div>
         </div>
         <button
-          className={SidebarStyles.createTeamButton}
+          className={UserSidebarStyles.createTeamButton}
           onClick={() => setOpen(true)}
         >
           Créer une équipe
@@ -73,4 +73,4 @@ const Sidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
   );
 };
 
-export default Sidebar;
+export default UserSidebar;

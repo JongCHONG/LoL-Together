@@ -2,7 +2,7 @@ import Menu from "../../components/Menu/Menu";
 import DashboardStyles from "./Dashboard.module.scss";
 
 import { useUser } from "../../contexts/UserContext";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import Sidebar from "../../components/UserSidebar/UserSidebar";
 import UserInfos from "../../components/UserInfos/UserInfos";
 import Announces from "../../components/Announces/Announces";
 
