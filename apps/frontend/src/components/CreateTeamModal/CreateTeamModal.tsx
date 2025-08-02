@@ -7,6 +7,7 @@ import CreateTeamModalStyles from "./CreateTeamModal.module.scss";
 import LanguagesSelect from "../LanguagesSelect/LanguagesSelect";
 import { useUser } from "../../contexts/UserContext";
 import { createTeam } from "../../utils/api/team";
+import { Team } from "../../utils/types/api";
 
 const initialValues = {
   name: "Team",
@@ -31,9 +32,10 @@ const CreateTeamModal = ({ open, setOpen }: ModalProps) => {
               _id: currentUser?._id || "",
               riot_id: currentUser?.riot_id || "",
             },
+            users: [currentUser?._id],
           };
           
-          createTeam(teamData).then(() => {
+          createTeam(teamData as unknown as Team).then(() => {
             refreshUser();
             resetForm();
             setOpen(false);

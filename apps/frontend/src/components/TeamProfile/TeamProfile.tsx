@@ -49,12 +49,13 @@ const TeamProfile = () => {
             leader={teamProfile.leader}
             name={teamProfile.name}
             createdAt={teamProfile.createdAt}
-            userCount={teamProfile.users ? teamProfile.users.length + 1 : 1}
+            userCount={teamProfile.users ? teamProfile.users.length : 1}
           />
         )}
         <div className={TeamProfileStyles.content}>
           {teamProfile && (
             <TeamInfos
+              leaderId={teamProfile.leader?._id ?? ""}
               languages={teamProfile.languages ?? []}
               availabilities={
                 teamProfile.availabilities ?? {
@@ -64,9 +65,15 @@ const TeamProfile = () => {
                   thursday: false,
                   friday: false,
                   saturday: false,
-                  sunday: false
+                  sunday: false,
                 }
               }
+              description={teamProfile.description ?? "N/A"}
+              discord={teamProfile.discord ?? "N/A"}
+              region={teamProfile.region ?? []}
+              status={teamProfile.status ?? "active"}
+              website={teamProfile.website ?? "N/A"}
+              users={teamProfile.users ?? []}
             />
           )}
           {/* <Announces

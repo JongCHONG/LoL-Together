@@ -71,7 +71,7 @@ const Teams = () => {
                   avatarUrl={team.logo || defaultAvatar}
                   showUserInfo={true}
                   enableTilt={true}
-                  membersCount={team.users ? team.users.length + 1 : 1}
+                  membersCount={team.users ? team.users.length : 1}
                   status={team.status || "active"}
                   onContactClick={() => handleContactClick(team._id)}
                 />

@@ -66,6 +66,7 @@ export interface Team {
   status?: string;
   users?: Types.ObjectId[];
   createdAt: string;
+  region?: string[];
 }
 
 export interface Announce {

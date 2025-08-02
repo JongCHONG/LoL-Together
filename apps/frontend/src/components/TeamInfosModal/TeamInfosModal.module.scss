@@ -1,0 +1,70 @@
+.modal_title {
+  font-size: 24px;
+  color: black;
+  font-family: "Merienda";
+}
+
+.form_group {
+  color: black;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .form_title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .checkbox_group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 50%;
+
+    .checkbox {
+      margin-right: 5px;
+    }
+  }
+
+  .form_field {
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: border 0.2s;
+  }
+  .form_field:focus {
+    border: 1.5px solid #ffd700;
+    outline: none;
+    background: #fff;
+  }
+}
+
+.form_actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 15px;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save_button {
+  background: linear-gradient(90deg, #ffd700 60%, #ffb300 100%);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(79, 100, 250, 0.09);
+  transition: background-color 0.6s ease 0.2s;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(90deg, #ffd700 60%, #ffb300 100%);
+    box-shadow: 0 4px 20px rgba(79, 100, 250, 0.15);
+    outline: none;
+  }
+}

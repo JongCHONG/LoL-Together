@@ -4,7 +4,6 @@ import TeamSidebarStyles from "./TeamSidebar.module.scss";
 import defaultAvatar from "../../assets/default-avatar.png";
 
 import { Team } from "../../utils/types/api";
-import { useAuth } from "../../utils/hooks/useAuth";
 import { useUser } from "../../contexts/UserContext";
 
 interface TeamSidebarProps {
