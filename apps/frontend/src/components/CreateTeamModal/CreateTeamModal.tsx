@@ -4,7 +4,7 @@ import ModalLayout from "../ModalLayout/ModalLayout";
 import { ModalProps } from "../../utils/types/modal";
 
 import CreateTeamModalStyles from "./CreateTeamModal.module.scss";
-import LanguagesSelect from "../LanguagesSelect/LanguagesSelect";
+import LanguagesSelect from "../CustomSelect/CustomSelect";
 import { useUser } from "../../contexts/UserContext";
 import { createTeam } from "../../utils/api/team";
 import { Team } from "../../utils/types/api";

@@ -4,12 +4,12 @@ import ModalLayout from "../ModalLayout/ModalLayout";
 
 import AnnounceModalStyles from "./AnnouncesModal.module.scss";
 import { createAnnounce, updateAnnounce } from "../../utils/api/announces";
-import { Announce, User } from "../../utils/types/api";
+import { Announce, Team, User } from "../../utils/types/api";
 import { useUser } from "../../contexts/UserContext";
 import { ModalProps } from "../../utils/types/modal";
 
 interface AnnounceModalProps extends ModalProps {
-  userId: User["_id"];
+  id: User["_id"] | Team["_id"];
   editAnnounce: Announce | null;
 }
 
@@ -20,7 +20,7 @@ interface FormValues {
 const AnnounceModal = ({
   open,
   setOpen,
-  userId,
+  id,
   editAnnounce,
 }: AnnounceModalProps) => {
   const { refreshUser } = useUser();
@@ -30,9 +30,13 @@ const AnnounceModal = ({
     { resetForm }: { resetForm: () => void },
     setOpen: (open: boolean) => void
   ) => {
+    if (!id) {
+      console.error("User or Team ID is undefined. Cannot create announce.");
+      return;
+    }
     const data = {
       text: values.announce,
-      user: userId,
+      user: id as string,
     };
     if (editAnnounce) {
       await updateAnnounce(editAnnounce._id, { text: values.announce });

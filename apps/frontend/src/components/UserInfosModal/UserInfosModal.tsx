@@ -11,7 +11,7 @@ import { updateUser } from "../../utils/api/user";
 import { Availabilities } from "../../utils/types/api";
 import { roles } from "../../utils/types/api";
 import { ModalProps } from "../../utils/types/modal";
-import LanguagesSelect from "../LanguagesSelect/LanguagesSelect";
+import LanguagesSelect from "../CustomSelect/CustomSelect";
 
 interface ModalFormValues {
   languages: string[];
@@ -88,6 +88,7 @@ const UserInfosModal = ({ open, setOpen }: ModalProps) => {
               <LanguagesSelect
                 values={values}
                 setFieldValue={setFieldValue}
+                type="languages"
               />
 
               <div className={ModalStyles.form_group}>

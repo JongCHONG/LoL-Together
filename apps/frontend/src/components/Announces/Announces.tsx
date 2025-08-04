@@ -7,16 +7,16 @@ import AnnounceModal from "../AnnouncesModal/AnnouncesModal";
 
 import AnnouncesStyles from "./Announces.module.scss";
 
-import { Announce, User } from "../../utils/types/api";
+import { Announce, Team, User } from "../../utils/types/api";
 import { deleteAnnounce } from "../../utils/api/announces";
 import { useUser } from "../../contexts/UserContext";
 
 interface AnnouncesProps {
-  userId: User["_id"];
+  id: User["_id"] | Team["_id"];
   announces: Announce[];
 }
 
-const Announces = ({ userId, announces }: AnnouncesProps) => {
+const Announces = ({ id, announces }: AnnouncesProps) => {
   const [open, setOpen] = useState(false);
   const [editAnnounce, setEditAnnounce] = useState<Announce | null>(null);
   const { refreshUser, currentUser } = useUser();
@@ -35,7 +35,7 @@ const Announces = ({ userId, announces }: AnnouncesProps) => {
     <div className={AnnouncesStyles.container}>
       <div className={AnnouncesStyles.header}>
         <h3 className={AnnouncesStyles.title}>Annonces</h3>
-        {currentUser?._id === userId && (
+        {currentUser?._id === id && (
           <TfiAnnouncement
             onClick={() => setOpen(true)}
             size={24}
@@ -58,7 +58,7 @@ const Announces = ({ userId, announces }: AnnouncesProps) => {
                 <p>{announce.text}</p>
 
                 <span className={AnnouncesStyles.date}>
-                        {currentUser?._id === userId && (
+                        {currentUser?._id === id && (
                   <>
                     <LiaEdit
                       onClick={() => handleEdit(announce)}
@@ -87,7 +87,7 @@ const Announces = ({ userId, announces }: AnnouncesProps) => {
           </center>
         )}
       </div>
-      <AnnounceModal open={open} setOpen={setOpen} userId={userId} editAnnounce={editAnnounce} />
+      <AnnounceModal open={open} setOpen={setOpen} id={id} editAnnounce={editAnnounce} />
     </div>
   );
 };

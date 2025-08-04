@@ -47,7 +47,7 @@ const UserProfile = () => {
         <div className={UserProfileStyles.content}>
           {userProfile?.riot_infos && <UserInfos userProfile={userProfile} />}
           <Announces
-            userId={userProfile?._id ?? ""}
+            id={userProfile?._id ?? ""}
             announces={userProfile?.announces ?? []}
           />
         </div>

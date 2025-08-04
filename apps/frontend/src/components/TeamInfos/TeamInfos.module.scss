@@ -1,26 +1,20 @@
 .container {
   width: 100%;
-  border-bottom: 1px solid gold;
-  padding-bottom: 50px;
   margin-top: 50px;
 
   .header {
     display: flex;
     gap: 20px;
     align-items: center;
-    margin-bottom: 20px;
-
-    h3 {
-      font-size: 24px;
-      color: white;
-      font-family: "Merienda";
-    }
   }
   .team_panel {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
+    margin-top: 20px;
     margin-bottom: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid gold;
 
     .team_info {
       width: 50%;
@@ -29,4 +23,10 @@
       gap: 10px;
     }
   }
+}
+
+.title {
+  font-size: 24px;
+  color: white;
+  font-family: "Merienda";
 }

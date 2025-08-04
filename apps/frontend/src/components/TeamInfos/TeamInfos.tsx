@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { LiaEdit } from "react-icons/lia";
+
 import { formatAvailabilities } from "../../utils/helpers/formatAvailabilities";
 import { formatLanguages } from "../../utils/helpers/formatLanguages";
-import { Availabilities } from "../../utils/types/api";
+import { Availabilities, Team } from "../../utils/types/api";
+
 import TeamInfosStyles from "./TeamInfos.module.scss";
-import { LiaEdit } from "react-icons/lia";
+
 import { useUser } from "../../contexts/UserContext";
 import TeamInfosModal from "../TeamInfosModal/TeamInfosModal";
 
@@ -17,22 +20,23 @@ interface TeamInfosProps {
   status?: string;
   website?: string;
   users?: any[];
+  setTeamProfile?: (team: Team) => void;
 }
 
 const TeamInfos = ({
   leaderId,
   languages,
   availabilities,
-  description,
   discord,
   region,
   status,
   website,
-  users,
+  setTeamProfile,
 }: TeamInfosProps) => {
   const formattedLanguages = formatLanguages(languages);
   const formattedAvailabilities = formatAvailabilities({ availabilities });
   const [open, setOpen] = useState<boolean>(false);
+
   const { currentUser } = useUser();
 
   return (
@@ -66,15 +70,6 @@ const TeamInfos = ({
             <div>Site web : {website}</div>
           </div>
         </div>
-        <div>
-          Membres :
-          {users && users.length > 0
-            ? users.map((user, index) => (
-                <span key={index}>{user.riot_id || "N/A"}</span>
-              ))
-            : "Aucun membre"}
-        </div>
-        <div>Description : {description}</div>
       </div>
 
       <TeamInfosModal
@@ -86,6 +81,7 @@ const TeamInfos = ({
         status={status}
         discord={discord}
         website={website}
+        setTeamProfile={setTeamProfile}
       />
     </>
   );

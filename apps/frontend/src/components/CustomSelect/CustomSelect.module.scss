@@ -1,0 +1,12 @@
+.form_group {
+  color: black;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .form_title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+}

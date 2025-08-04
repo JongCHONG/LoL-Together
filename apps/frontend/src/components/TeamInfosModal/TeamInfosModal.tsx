@@ -1,33 +1,25 @@
+import { useCallback } from "react";
 import { Formik, Form, Field } from "formik";
-import { ModalProps } from "../../utils/types/modal";
+import { useParams } from "react-router-dom";
+
 import ModalLayout from "../ModalLayout/ModalLayout";
 import TeamInfosModalStyles from "./TeamInfosModal.module.scss";
-import { useCallback } from "react";
-import LanguagesSelect from "../LanguagesSelect/LanguagesSelect";
+import CustomSelect from "../CustomSelect/CustomSelect";
+
 import { WeekDays } from "../../utils/enums/weekDays";
-import { Availabilities } from "../../utils/types/api";
+import { Availabilities, Team } from "../../utils/types/api";
+import { statuses } from "../../utils/enums/statuses";
+import { ModalProps } from "../../utils/types/modal";
+import { updateTeam } from "../../utils/api/team";
 
 interface ModalFormValues {
   languages: string[];
   availabilities: Availabilities;
-  region: string;
+  region: string[];
   status: string;
   discord: string;
   website: string;
 }
-
-const regions = [
-  "EUW",
-  "EUNE",
-  "NA",
-  "KR",
-  "LAN",
-  "LAS",
-  "OCE",
-  "RU",
-  "TR",
-  "JP",
-];
 
 interface TeamInfosModalProps extends ModalProps {
   languages: string[];
@@ -36,15 +28,8 @@ interface TeamInfosModalProps extends ModalProps {
   status?: string;
   discord?: string;
   website?: string;
+  setTeamProfile?: (team: any) => void;
 }
-
-const statuses = [
-  "Disponible",
-  "Occupé",
-  "En partie",
-  "Absent",
-  "En recherche d'équipe",
-];
 
 const TeamInfosModal = ({
   open,
@@ -55,12 +40,36 @@ const TeamInfosModal = ({
   status,
   discord,
   website,
+  setTeamProfile,
 }: TeamInfosModalProps) => {
+  const { id } = useParams<{ id: string }>();
+
   const handleSubmit = useCallback(
     async (values: ModalFormValues) => {
       try {
-        // Appelle ici ton API pour update l'utilisateur
-        // await updateUser(user._id, values);
+        if (!id) {
+          console.error("Team ID is undefined. Cannot update team.");
+          return;
+        }
+        await updateTeam(id, {
+          languages: values.languages,
+          availabilities: values.availabilities,
+          region: values.region,
+          status: values.status,
+          discord: values.discord,
+          website: values.website,
+        });
+        if (setTeamProfile) {
+          setTeamProfile((prevTeam: any) => ({
+            ...prevTeam,
+            languages: values.languages,
+            availabilities: values.availabilities,
+            region: values.region,
+            status: values.status,
+            discord: values.discord,
+            website: values.website,
+          }));
+        }
         setOpen(false);
       } catch (error) {
         console.error("Error updating user:", error);
@@ -88,8 +97,10 @@ const TeamInfosModal = ({
               sunday: false,
             },
             region: Array.isArray(region)
-              ? region[0] || "EUW"
-              : region || "EUW",
+              ? region
+              : region
+                ? [region]
+                : ["EUW"],
             status: status || "Disponible",
             discord: discord || "",
             website: website || "",
@@ -97,20 +108,28 @@ const TeamInfosModal = ({
           onSubmit={handleSubmit}
         >
           {({ values, setFieldValue }) => (
-            <Form className={TeamInfosModalStyles.formGroup}>
-              <div>
-                <label>Langues :</label>
-                <LanguagesSelect
-                  values={values}
-                  setFieldValue={setFieldValue}
-                />
-              </div>
-              <div>
-                <label>Disponibilités :</label>
-                <div className={TeamInfosModalStyles.checkbox_group}>
+            <Form className={TeamInfosModalStyles.form_group}>
+              <CustomSelect
+                values={{
+                  languages: values.languages,
+                }}
+                setFieldValue={setFieldValue}
+                type="languages"
+              />
+              <div className={TeamInfosModalStyles.checkbox_group}>
+                <label className={TeamInfosModalStyles.label_title}>
+                  Disponibilités :
+                </label>
+                <div>
                   {Object.entries(WeekDays).map(([dayKey, label]) => (
-                    <label key={dayKey}>
+                    <label
+                      key={dayKey}
+                      className={TeamInfosModalStyles.checkbox}
+                    >
                       <Field
+                        style={{
+                          marginRight: "5px",
+                        }}
                         type="checkbox"
                         name={`availabilities.${dayKey}`}
                         checked={
@@ -128,19 +147,23 @@ const TeamInfosModal = ({
                   ))}
                 </div>
               </div>
-              <div>
-                <label>Région :</label>
-                <Field as="select" name="region">
-                  {regions.map((r) => (
-                    <option key={r} value={r}>
-                      {r}
-                    </option>
-                  ))}
-                </Field>
-              </div>
-              <div>
-                <label>Status :</label>
-                <Field as="select" name="status">
+              <CustomSelect
+                values={{ region: values.region }}
+                setFieldValue={setFieldValue}
+                type="regions"
+              />
+              <div className={TeamInfosModalStyles.statuses_group}>
+                <label
+                  className={TeamInfosModalStyles.label_title}
+                  style={{ marginRight: "54px" }}
+                >
+                  Status :
+                </label>
+                <Field
+                  as="select"
+                  name="status"
+                  className={TeamInfosModalStyles.statuses_field}
+                >
                   {statuses.map((s) => (
                     <option key={s} value={s}>
                       {s}
@@ -148,13 +171,33 @@ const TeamInfosModal = ({
                   ))}
                 </Field>
               </div>
-              <div>
-                <label>Discord :</label>
-                <Field type="text" name="discord" placeholder="username#1234" />
+              <div className={TeamInfosModalStyles.input_group}>
+                <label
+                  className={TeamInfosModalStyles.label_title}
+                  style={{ marginRight: "47px" }}
+                >
+                  Discord :
+                </label>
+                <Field
+                  type="text"
+                  name="discord"
+                  placeholder="username#1234"
+                  className={TeamInfosModalStyles.form_field}
+                />
               </div>
-              <div>
-                <label>Site web :</label>
-                <Field type="url" name="website" placeholder="https://..." />
+              <div className={TeamInfosModalStyles.input_group}>
+                <label
+                  className={TeamInfosModalStyles.label_title}
+                  style={{ marginRight: "41px" }}
+                >
+                  Site web :
+                </label>
+                <Field
+                  type="url"
+                  name="website"
+                  placeholder="https://..."
+                  className={TeamInfosModalStyles.form_field}
+                />
               </div>
               <div className={TeamInfosModalStyles.form_actions}>
                 <button

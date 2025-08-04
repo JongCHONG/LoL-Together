@@ -73,7 +73,7 @@ const Teams = () => {
                   enableTilt={true}
                   membersCount={team.users ? team.users.length : 1}
                   status={team.status || "active"}
-                  onContactClick={() => handleContactClick(team._id)}
+                  onContactClick={() => handleContactClick(team._id ?? "")}
                 />
               ))
             ) : (

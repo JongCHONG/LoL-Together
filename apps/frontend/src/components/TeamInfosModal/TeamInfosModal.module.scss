@@ -5,12 +5,13 @@
 }
 
 .form_group {
+  margin: 10px 0;
   color: black;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
 
+  .label_title {
+    display: block;
+    font-weight: 600;
+  }
   .form_title {
     font-size: 16px;
     font-weight: 700;
@@ -18,13 +19,31 @@
 
   .checkbox_group {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
-    width: 50%;
+    width: 80%;
+    margin-bottom: 10px;
 
     .checkbox {
-      margin-right: 5px;
+      display: block;
     }
+  }
+
+  .statuses_group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .statuses_field {
+      padding: 10px;
+      border-radius: 4px;
+      border-color: rgba(128, 128, 128, 0.405);
+    }
+  }
+
+  .input_group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
   }
 
   .form_field {

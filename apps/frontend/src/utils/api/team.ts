@@ -71,3 +71,25 @@ export const fetchTeamById = async (teamId: string): Promise<Team> => {
     throw error;
   }
 };
+
+export const updateTeam = async (teamId: string, teamData: Team): Promise<void> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/teams/${teamId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(teamData),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || "Erreur lors de la mise à jour de l'équipe");
+    }
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Impossible de se connecter au serveur");
+    }
+    throw error;
+  }
+};
