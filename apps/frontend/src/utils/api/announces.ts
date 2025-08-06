@@ -5,7 +5,8 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
 export const createAnnounce = async (data: {
   text: string;
   user: string;
-}): Promise<Announce> => {
+  team: string;
+}): Promise<Announce> => {  
   try {
     const response = await fetch(`${API_BASE_URL}/api/announces`, {
       method: "POST",

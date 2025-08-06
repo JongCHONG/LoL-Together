@@ -1,16 +1,20 @@
+import { useCallback } from "react";
 import { Formik, Form, Field } from "formik";
 
 import ModalLayout from "../ModalLayout/ModalLayout";
 
 import AnnounceModalStyles from "./AnnouncesModal.module.scss";
+
+import { ModalProps } from "../../utils/types/modal";
 import { createAnnounce, updateAnnounce } from "../../utils/api/announces";
 import { Announce, Team, User } from "../../utils/types/api";
 import { useUser } from "../../contexts/UserContext";
-import { ModalProps } from "../../utils/types/modal";
 
 interface AnnounceModalProps extends ModalProps {
-  id: User["_id"] | Team["_id"];
+  userId?: User["_id"];
+  teamId?: Team["_id"];
   editAnnounce: Announce | null;
+  onAnnounceChange: (announce: Announce, mode: "create" | "edit") => void;
 }
 
 interface FormValues {
@@ -20,36 +24,48 @@ interface FormValues {
 const AnnounceModal = ({
   open,
   setOpen,
-  id,
+  userId,
+  teamId,
   editAnnounce,
+  onAnnounceChange,
 }: AnnounceModalProps) => {
   const { refreshUser } = useUser();
 
-  const handleSubmit = async (
-    values: FormValues,
-    { resetForm }: { resetForm: () => void },
-    setOpen: (open: boolean) => void
-  ) => {
-    if (!id) {
-      console.error("User or Team ID is undefined. Cannot create announce.");
-      return;
-    }
-    const data = {
-      text: values.announce,
-      user: id as string,
-    };
-    if (editAnnounce) {
-      await updateAnnounce(editAnnounce._id, { text: values.announce });
+  const handleSubmit = useCallback(
+    async (
+      values: FormValues,
+      { resetForm }: { resetForm: () => void },
+      setOpen: (open: boolean) => void
+    ) => {
+      if (!userId && !teamId) {
+        console.error(
+          "User ID and Team ID are both undefined. Cannot create announce."
+        );
+        return;
+      }
+      const data = {
+        text: values.announce,
+        user: userId as string,
+        team: teamId as string,
+      };
+      if (editAnnounce) {
+        const updated = await updateAnnounce(editAnnounce._id, {
+          text: values.announce,
+        });
+        await refreshUser();
+        resetForm();
+        setOpen(false);
+        onAnnounceChange(updated, "edit");
+        return;
+      }
+      const newAnnounce = await createAnnounce(data);
       await refreshUser();
       resetForm();
       setOpen(false);
-      return;
-    }
-    await createAnnounce(data);
-    await refreshUser();
-    resetForm();
-    setOpen(false);
-  };
+      onAnnounceChange(newAnnounce, "create");
+    },
+    [userId, teamId, editAnnounce, refreshUser, onAnnounceChange]
+  );
 
   return (
     <ModalLayout open={open} onClose={() => setOpen(false)}>

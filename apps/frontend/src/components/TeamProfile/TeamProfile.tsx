@@ -17,7 +17,6 @@ import Announces from "../Announces/Announces";
 
 const TeamProfile = () => {
   const { currentUser } = useUser();
-
   const { id } = useParams<{ id: string }>();
   const [teamProfile, setTeamProfile] = useState<Team | null>(null);
   const [editDescription, setEditDescription] = useState<boolean>(false);
@@ -167,7 +166,8 @@ const TeamProfile = () => {
             </div>
           </div>
           <Announces
-            id={teamProfile?._id ?? ""}
+            teamId={teamProfile?._id ?? ""}
+            leaderId={teamProfile?.leader?._id ?? ""}
             announces={teamProfile?.announces ?? []}
           />
         </div>

@@ -32,17 +32,18 @@ export const createTeam = async (teamData: Team): Promise<void> => {
 };
 
 export const fetchTeams = async (): Promise<Team[]> => {
-
   try {
     const response = await fetch(`${API_BASE_URL}/api/teams/list`);
 
     if (!response.ok) {
       const data = await response.json();
-      throw new Error(data.message || "Erreur lors de la récupération des équipes");
+      throw new Error(
+        data.message || "Erreur lors de la récupération des équipes"
+      );
     }
 
     const teams: Team[] = await response.json();
-    
+
     return teams;
   } catch (error) {
     if (error instanceof TypeError) {
@@ -58,11 +59,13 @@ export const fetchTeamById = async (teamId: string): Promise<Team> => {
 
     if (!response.ok) {
       const data = await response.json();
-      throw new Error(data.message || "Erreur lors de la récupération de l'équipe");
+      throw new Error(
+        data.message || "Erreur lors de la récupération de l'équipe"
+      );
     }
 
     const team: Team = await response.json();
-    
+
     return team;
   } catch (error) {
     if (error instanceof TypeError) {
@@ -72,7 +75,10 @@ export const fetchTeamById = async (teamId: string): Promise<Team> => {
   }
 };
 
-export const updateTeam = async (teamId: string, teamData: Team): Promise<void> => {
+export const updateTeam = async (
+  teamId: string,
+  teamData: Team
+): Promise<void> => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/teams/${teamId}`, {
       method: "PUT",
@@ -84,7 +90,9 @@ export const updateTeam = async (teamId: string, teamData: Team): Promise<void> 
 
     if (!response.ok) {
       const data = await response.json();
-      throw new Error(data.message || "Erreur lors de la mise à jour de l'équipe");
+      throw new Error(
+        data.message || "Erreur lors de la mise à jour de l'équipe"
+      );
     }
   } catch (error) {
     if (error instanceof TypeError) {

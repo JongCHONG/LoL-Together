@@ -8,7 +8,7 @@ import Announces from "../../components/Announces/Announces";
 
 const Dashboard = () => {
   const { currentUser } = useUser();
-
+  
   return (
     <>
       <Menu />
