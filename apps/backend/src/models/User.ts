@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema, Types } from "mongoose";
 import { Availabilities } from "./types";
 
-interface RiotInfos {
+export interface RiotInfos {
   profileIconId: number;
   summonerLevel: number;
   queueType: string;
