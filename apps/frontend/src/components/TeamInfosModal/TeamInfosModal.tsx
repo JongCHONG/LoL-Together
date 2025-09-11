@@ -7,7 +7,7 @@ import TeamInfosModalStyles from "./TeamInfosModal.module.scss";
 import CustomSelect from "../CustomSelect/CustomSelect";
 
 import { WeekDays } from "../../utils/enums/weekDays";
-import { Availabilities, Team } from "../../utils/types/api";
+import { Availabilities } from "../../utils/types/api";
 import { statuses } from "../../utils/enums/statuses";
 import { ModalProps } from "../../utils/types/modal";
 import { updateTeam } from "../../utils/api/team";

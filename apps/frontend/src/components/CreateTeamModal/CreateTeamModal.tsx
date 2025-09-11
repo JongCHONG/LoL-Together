@@ -60,7 +60,7 @@ const CreateTeamModal = ({ open, setOpen }: ModalProps) => {
                 required
               />
             </div>
-            <LanguagesSelect values={values} setFieldValue={setFieldValue} />
+            <LanguagesSelect values={values} setFieldValue={setFieldValue} type={"languages"} />
             <div>
               <label
                 htmlFor="website"
