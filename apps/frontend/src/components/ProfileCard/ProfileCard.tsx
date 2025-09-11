@@ -2,7 +2,10 @@ import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import { FaDiscord } from "react-icons/fa6";
 
 import "./ProfileCard.css";
-import { getIconBorderByTier, Tier } from "../../utils/helpers/getIconBorderByTier";
+import {
+  getIconBorderByTier,
+  Tier,
+} from "../../utils/helpers/getIconBorderByTier";
 
 interface ProfileCardProps {
   avatarUrl: string;
@@ -278,9 +281,14 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
           <div className="pc-shine" />
           <div className="pc-glare" />
           <div className="pc-content pc-avatar-content">
-            <div className="pc-avatar-bg">
-              <img src={getIconBorderByTier(tier as Tier) ?? undefined} alt="avatar background" />
-            </div>
+            {tier !== "Unranked" && (
+              <div className="pc-avatar-bg">
+                <img
+                  src={getIconBorderByTier(tier as Tier) ?? undefined}
+                  alt="avatar background"
+                />
+              </div>
+            )}
             <img className="avatar" src={avatarUrl} alt="avatar" />
 
             {showUserInfo && (
@@ -303,7 +311,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                       <FaDiscord />
                       {handle}
                     </div>
-                    <div className="pc-status">{tier} {rank}</div>
+                    <div className="pc-status">
+                      {tier} {rank}
+                    </div>
                   </div>
                 </div>
                 <button
@@ -325,6 +335,8 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
               <p>{title}</p>
               <div className="pc-wins-losses">
                 <span className="pc-wins">Victoires: {wins}</span>
+              </div>
+              <div className="pc-wins-losses">
                 <span className="pc-losses">Défaites: {losses}</span>
               </div>
             </div>

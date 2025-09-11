@@ -69,8 +69,8 @@ const Users = () => {
               users.map((user: User, index: number) => (
                 <ProfileCard
                   key={index}
-                  name={user.riot_id}
-                  title={`#${user.tagline}`}
+                  name={user.riot_id ? user.riot_id : user.email}
+                  title={user.tagline ? `#${user.tagline}` : ""}
                   handle={user.discord || "N/A"}
                   wins={user.riot_infos?.wins ?? 0}
                   losses={user.riot_infos?.losses ?? 0}

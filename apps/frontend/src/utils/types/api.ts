@@ -46,8 +46,8 @@ export interface User {
   roles?: roles;
   teams?: Team[];
   riot_infos?: RiotInfos;
-  riot_id: string;
-  tagline: string;
+  riot_id?: string;
+  tagline?: string;
   discord?: string;
   createdAt: string;
   updatedAt: string;

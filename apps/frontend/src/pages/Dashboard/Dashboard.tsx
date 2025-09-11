@@ -8,23 +8,23 @@ import Announces from "../../components/Announces/Announces";
 
 const Dashboard = () => {
   const { currentUser } = useUser();
-  
+
   return (
     <>
       <Menu />
       <div className={DashboardStyles.banner}>
-        <h1 className={DashboardStyles.title}>Bienvenue, {currentUser?.riot_id}</h1>
+        <h1 className={DashboardStyles.title}>
+          Bienvenue, {currentUser?.riot_id || currentUser?.email}
+        </h1>
       </div>
       <div className={DashboardStyles.container}>
-        {currentUser?.riot_infos && (
-          <Sidebar
-            riotId={currentUser.riot_id}
-            tagline={currentUser.tagline}
-            riotInfos={currentUser.riot_infos}
-          />
-        )}
+        <Sidebar
+          riotId={currentUser?.riot_id}
+          tagline={currentUser?.tagline}
+          riotInfos={currentUser?.riot_infos}
+        />
         <div className={DashboardStyles.content}>
-          {currentUser?.riot_infos && <UserInfos />}
+          <UserInfos />
           <Announces
             userId={currentUser?._id ?? ""}
             announces={currentUser?.announces ?? []}

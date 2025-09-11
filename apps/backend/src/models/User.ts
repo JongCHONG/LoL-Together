@@ -47,8 +47,8 @@ const UserSchema = new Schema<IUser>(
   {
     password: { type: String, required: true },
     email: { type: String, unique: true, required: true },
-    riot_id: { type: String, required: true, unique: true },
-    tagline: { type: String, required: true },
+    riot_id: { type: String, unique: true },
+    tagline: { type: String },
     riot_infos: { type: Object },
     avatar: { type: String },
     discord: { type: String },

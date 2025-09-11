@@ -53,7 +53,7 @@ const Teams = () => {
       </div>
 
       <div className={TeamsStyles.container}>
-        {loading && <p>Chargement des joueurs...</p>}
+        {loading && <p>Chargement des équipes...</p>}
 
         {error && <p style={{ color: "red" }}>Erreur: {error}</p>}
 
@@ -77,7 +77,7 @@ const Teams = () => {
                 />
               ))
             ) : (
-              <p>Aucun joueur trouvé</p>
+              <p>Aucune équipe trouvée</p>
             )}
           </div>
         )}

@@ -23,12 +23,10 @@ export const registerValidationSchema = Yup.object({
     .required("La confirmation du mot de passe est requise"),
   riot_id: Yup.string()
     .min(3, "Le Riot ID doit contenir au moins 3 caractères")
-    .max(16, "Le Riot ID ne peut pas dépasser 16 caractères")
-    .required("Le Riot ID est requis"),
+    .max(16, "Le Riot ID ne peut pas dépasser 16 caractères"),
   tagline: Yup.string()
     .matches(
       /^[a-zA-Z0-9]{3,5}$/,
       "Le tagline doit contenir 3 à 5 caractères alphanumériques"
     )
-    .required("Le tagline est requis"),
 });

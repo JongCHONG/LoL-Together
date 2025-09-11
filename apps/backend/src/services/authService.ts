@@ -9,23 +9,28 @@ export class AuthService {
   static async register(
     email: string,
     password: string,
-    riot_id: string,
-    tagline: string
+    riot_id?: string,
+    tagline?: string
   ): Promise<{ user: IUser; token: string }> {
     try {
-      const account = await RiotService.getAccountByRiotId(riot_id, tagline);
-      const summoner = await RiotService.getSummonerByPuuid(account.puuid);
-      const lastMatches = await RiotService.getListMatchesByPuuid(
-        account.puuid
-      );
-      const lastMatchDetails = await RiotService.getMatchById(lastMatches[0]);
-      const leagueEntries = await RiotService.getLeagueEntries(account.puuid);
+      let riot_infos = undefined;
 
-      const riot_infos = buildRiotInfos(
-        summoner,
-        leagueEntries,
-        lastMatchDetails.info.gameEndTimestamp
-      );
+      if (riot_id && tagline) {
+        const account = await RiotService.getAccountByRiotId(riot_id, tagline);
+        const summoner = await RiotService.getSummonerByPuuid(account.puuid);
+        const lastMatches = await RiotService.getListMatchesByPuuid(
+          account.puuid
+        );
+        const lastMatchDetails = await RiotService.getMatchById(lastMatches[0]);
+        const leagueEntries = await RiotService.getLeagueEntries(account.puuid);
+
+        riot_infos = buildRiotInfos(
+          summoner,
+          leagueEntries,
+          lastMatchDetails.info.gameEndTimestamp
+        );
+      }
+
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const user = new User({
