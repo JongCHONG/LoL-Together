@@ -11,6 +11,7 @@ import { Availabilities } from "../../utils/types/api";
 import { statuses } from "../../utils/enums/statuses";
 import { ModalProps } from "../../utils/types/modal";
 import { updateTeam } from "../../utils/api/team";
+import { useAuth } from "../../utils/hooks/useAuth";
 
 interface ModalFormValues {
   languages: string[];
@@ -43,6 +44,7 @@ const TeamInfosModal = ({
   setTeamProfile,
 }: TeamInfosModalProps) => {
   const { id } = useParams<{ id: string }>();
+  const { token } = useAuth();
 
   const handleSubmit = useCallback(
     async (values: ModalFormValues) => {
@@ -58,7 +60,7 @@ const TeamInfosModal = ({
           status: values.status,
           discord: values.discord,
           website: values.website,
-        });
+        }, token ?? "");
         if (setTeamProfile) {
           setTeamProfile((prevTeam: any) => ({
             ...prevTeam,
