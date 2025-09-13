@@ -3,20 +3,22 @@ import { useParams } from "react-router-dom";
 import { Formik } from "formik";
 import { LiaEdit } from "react-icons/lia";
 
-import TeamProfileStyles from "./TeamProfile.module.scss";
+import TeamPageStyles from "./TeamPage.module.scss";
 
-import Menu from "../Menu/Menu";
-import TeamSidebar from "../TeamSidebar/TeamSidebar";
-import TeamInfos from "../TeamInfos/TeamInfos";
+import Menu from "../../components/Menu/Menu";
+import TeamSidebar from "../../components/TeamSidebar/TeamSidebar";
+import TeamInfos from "../../components/TeamInfos/TeamInfos";
 
 import { Team } from "../../utils/types/api";
 import { fetchTeamById, updateTeam } from "../../utils/api/team";
 
 import { useUser } from "../../contexts/UserContext";
-import Announces from "../Announces/Announces";
+import Announces from "../../components/Announces/Announces";
+import { useAuth } from "../../utils/hooks/useAuth";
 
-const TeamProfile = () => {
+const TeamPage = () => {
   const { currentUser } = useUser();
+  const { token } = useAuth();
   const { id } = useParams<{ id: string }>();
   const [teamProfile, setTeamProfile] = useState<Team | null>(null);
   const [editDescription, setEditDescription] = useState<boolean>(false);
@@ -35,7 +37,7 @@ const TeamProfile = () => {
 
         await updateTeam(id, {
           description: values.description,
-        });
+        }, token ?? "");
       } catch (error) {
         console.error("Failed to update team description:", error);
       }
@@ -64,15 +66,19 @@ const TeamProfile = () => {
     return <div>Chargement du profil...</div>;
   }
 
+  console.log({ teamProfile });
+  
   return (
     <>
       <Menu />
-      <div className={TeamProfileStyles.banner}>
-        <h1 className={TeamProfileStyles.title}>Team {teamProfile?.name}</h1>
+      <div className={TeamPageStyles.banner}>
+        <h1 className={TeamPageStyles.title}>Team {teamProfile?.name}</h1>
       </div>
-      <div className={TeamProfileStyles.container}>
+      <div className={TeamPageStyles.container}>
         {teamProfile && (
           <TeamSidebar
+            id={teamProfile._id || ""}
+            email={teamProfile.leader?.email || ""}
             logo={teamProfile.logo}
             leader={teamProfile.leader}
             name={teamProfile.name ?? ""}
@@ -80,7 +86,7 @@ const TeamProfile = () => {
             userCount={teamProfile.users ? teamProfile.users.length : 1}
           />
         )}
-        <div className={TeamProfileStyles.content}>
+        <div className={TeamPageStyles.content}>
           {teamProfile && (
             <TeamInfos
               leaderId={teamProfile.leader?._id ?? ""}
@@ -106,15 +112,15 @@ const TeamProfile = () => {
             />
           )}
 
-          <div className={TeamProfileStyles.members}>
-            <div className={TeamProfileStyles.title}>Membres</div>
+          <div className={TeamPageStyles.members}>
+            <div className={TeamPageStyles.title}>Membres</div>
             {teamProfile?.users && teamProfile.users.length > 0
               ? teamProfile.users.map((user: any, index: number) => {
                   return (
                     <a
                       key={user._id ? String(user._id) : String(index)}
                       href={`/user/${user._id}`}
-                      className={TeamProfileStyles.member_link}
+                      className={TeamPageStyles.member_link}
                     >
                       {user.riot_id ? user.riot_id : "N/A"}
                     </a>
@@ -123,9 +129,9 @@ const TeamProfile = () => {
               : "Aucun membre"}
           </div>
 
-          <div className={TeamProfileStyles.description}>
-            <div className={TeamProfileStyles.header}>
-              <div className={TeamProfileStyles.title}>Description</div>
+          <div className={TeamPageStyles.description}>
+            <div className={TeamPageStyles.header}>
+              <div className={TeamPageStyles.title}>Description</div>
               {currentUser?._id === teamProfile.leader?._id && (
                 <LiaEdit
                   onClick={() => setEditDescription(true)}
@@ -136,7 +142,7 @@ const TeamProfile = () => {
                 />
               )}
             </div>
-            <div className={TeamProfileStyles.description_text}>
+            <div className={TeamPageStyles.description_text}>
               {editDescription ? (
                 <Formik
                   initialValues={{ description: descriptionText }}
@@ -149,10 +155,10 @@ const TeamProfile = () => {
                         value={values.description}
                         onChange={handleChange}
                       />
-                      <div className={TeamProfileStyles.button_container}>
+                      <div className={TeamPageStyles.button_container}>
                         <button
                           type="submit"
-                          className={TeamProfileStyles.save_button}
+                          className={TeamPageStyles.save_button}
                         >
                           Enregistrer
                         </button>
@@ -176,4 +182,4 @@ const TeamProfile = () => {
   );
 };
 
-export default TeamProfile;
+export default TeamPage;

@@ -77,13 +77,15 @@ export const fetchTeamById = async (teamId: string): Promise<Team> => {
 
 export const updateTeam = async (
   teamId: string,
-  teamData: Team
+  teamData: Team,
+  token: string
 ): Promise<void> => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/teams/${teamId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(teamData),
     });
@@ -92,6 +94,29 @@ export const updateTeam = async (
       const data = await response.json();
       throw new Error(
         data.message || "Erreur lors de la mise à jour de l'équipe"
+      );
+    }
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Impossible de se connecter au serveur");
+    }
+    throw error;
+  }
+};
+
+export const deleteTeam = async (teamId: string, token: string): Promise<void> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/teams/${teamId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(
+        data.message || "Erreur lors de la suppression de l'équipe"
       );
     }
   } catch (error) {

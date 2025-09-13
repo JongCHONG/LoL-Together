@@ -6,12 +6,12 @@ import Register from "./pages/Register/Register";
 import Users from "./pages/Users/Users";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Teams from "./pages/Teams/Teams";
+import TeamPage from "./pages/TeamPage/TeamPage";
+import UserPage from "./pages/UserPage/UserPage";
 
 import { UserProvider } from "./contexts/UserContext";
 
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import UserProfile from "./components/UserProfile/UserProfile";
-import TeamProfile from "./components/TeamProfile/TeamProfile";
 
 const App = () => {
   return (
@@ -35,7 +35,7 @@ const App = () => {
             path="/user/:id"
             element={
               <PrivateRoute>
-                <UserProfile />
+                <UserPage />
               </PrivateRoute>
             }
           />
@@ -43,7 +43,7 @@ const App = () => {
             path="/team/:id"
             element={
               <PrivateRoute>
-                <TeamProfile />
+                <TeamPage />
               </PrivateRoute>
             }
           />

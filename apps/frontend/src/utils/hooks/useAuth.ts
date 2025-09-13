@@ -45,6 +45,8 @@ export const useAuth = () => {
     };
   }, []);
 
+  const token = localStorage.getItem("authToken");
+
   const logout = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("userData");
@@ -56,6 +58,7 @@ export const useAuth = () => {
   };
 
   return { 
+    token,
     isAuthenticated, 
     isLoading, 
     refreshAuth,

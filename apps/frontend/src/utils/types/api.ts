@@ -55,7 +55,7 @@ export interface User {
 
 export interface Team {
   _id?: string;
-  leader?: { _id: string; riot_id: string };
+  leader?: { _id: string; riot_id: string, email: string };
   name?: string;
   website?: string;
   description?: string;

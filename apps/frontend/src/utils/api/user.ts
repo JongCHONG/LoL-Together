@@ -71,7 +71,7 @@ export const fetchUserById = async (userId: string): Promise<User> => {
 export const updateUser = async (
   userId: string,
   data: any,
-  token?: string
+  token: string
 ) => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
@@ -96,7 +96,7 @@ export const updateUser = async (
   }
 };
 
-export const deleteUser = async (userId: string, token?: string) => {
+export const deleteUser = async (userId: string, token: string) => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
       method: "DELETE",

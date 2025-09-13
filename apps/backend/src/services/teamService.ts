@@ -11,7 +11,7 @@ export class TeamService {
   static async getTeamById(teamId: string): Promise<ITeam | null> {
     return await Team.findById(teamId)
       .populate("users", "riot_id")
-      .populate("leader", "riot_id")
+      .populate("leader", "riot_id email")
       .populate("announces", "text user createdAt updatedAt");
   }
 

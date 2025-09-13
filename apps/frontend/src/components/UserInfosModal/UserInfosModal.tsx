@@ -12,6 +12,7 @@ import { Availabilities } from "../../utils/types/api";
 import { roles } from "../../utils/types/api";
 import { ModalProps } from "../../utils/types/modal";
 import LanguagesSelect from "../CustomSelect/CustomSelect";
+import { useAuth } from "../../utils/hooks/useAuth";
 
 interface ModalFormValues {
   languages: string[];
@@ -26,6 +27,7 @@ interface HandleSubmitProps {
 
 const UserInfosModal = ({ open, setOpen }: ModalProps) => {
   const { currentUser, refreshUser } = useUser();
+  const { token } = useAuth();
   
   const handleSubmit = useCallback(
     async (
@@ -42,7 +44,7 @@ const UserInfosModal = ({ open, setOpen }: ModalProps) => {
           availabilities: values.availabilities,
           discord: values.discord,
           roles: values.roles,
-        });
+        }, token ?? "");
         await refreshUser();
         setOpen(false);
       } catch (error) {

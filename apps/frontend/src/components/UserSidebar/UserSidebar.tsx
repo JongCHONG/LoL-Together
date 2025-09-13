@@ -22,13 +22,13 @@ interface SidebarProps {
 
 const UserSidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
   const { currentUser } = useUser();
-  const { logout } = useAuth();
+  const { logout, token } = useAuth();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [open, setOpen] = useState<boolean>(false);
 
   const handleDeleteAccount = useCallback(async () => {
-    await deleteUser(currentUser?._id || "");
+    await deleteUser(currentUser?._id || "", token ?? "");
     logout();
     navigate("/");
   }, [currentUser?._id, navigate]);
