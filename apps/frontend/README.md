@@ -47,7 +47,7 @@ src/
 Créez un fichier `.env.local` avec :
 
 ```env
-VITE_API_URL_LOCAL=http://localhost:3001
+VITE_API_URL=http://localhost:3001
 VITE_APP_NAME=LoL-Together
 ```
 
