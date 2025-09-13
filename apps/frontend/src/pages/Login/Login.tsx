@@ -4,7 +4,7 @@ import { decodeToken } from "react-jwt";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
-import LoginStyles from "./login.module.scss";
+import LoginStyles from "./Login.module.scss";
 
 import Menu from "../../components/Menu/Menu";
 
