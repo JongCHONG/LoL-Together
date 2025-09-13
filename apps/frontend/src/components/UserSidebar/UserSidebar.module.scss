@@ -81,4 +81,21 @@
       background-color: #e6b800;
     }
   }
+  .deleteAccountButton {
+    width: 100%;
+    height: 50px;
+    background-color: #ff4d4d;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #e60000;
+    }
+  }
 }

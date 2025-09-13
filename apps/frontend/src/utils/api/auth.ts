@@ -2,7 +2,7 @@ import { AuthResponse, LoginCredentials, RegisterCredentials } from "../types/au
 
 const API_BASE_URL = import.meta.env.VITE_API_URL_LOCAL;
 
-export const loginUser = async (credentials: LoginCredentials): Promise<AuthResponse> => {
+export const loginUser = async (credentials: LoginCredentials): Promise<AuthResponse> => {  
   const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
     method: "POST",
     headers: {

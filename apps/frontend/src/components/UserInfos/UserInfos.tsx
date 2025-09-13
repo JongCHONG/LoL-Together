@@ -6,6 +6,7 @@ import { useUser } from "../../contexts/UserContext";
 
 import UserInfosStyles from "./UserInfos.module.scss";
 import UserInfosModal from "../UserInfosModal/UserInfosModal";
+
 import { LolRole } from "../../utils/enums/lolRole";
 import { getRoleIconByRole } from "../../utils/helpers/getRoleIconByRole";
 import { User } from "../../utils/types/api";

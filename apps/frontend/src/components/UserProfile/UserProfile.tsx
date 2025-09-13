@@ -17,7 +17,6 @@ const UserProfile = () => {
     const fetchData = async () => {
       if (!id) return;
       const userProfile = await fetchUserById(id);
-      console.log("Profil de l'utilisateur:", userProfile);
       setUserProfile(userProfile);
     };
 
@@ -37,15 +36,13 @@ const UserProfile = () => {
         </h1>
       </div>
       <div className={UserProfileStyles.container}>
-        {userProfile?.riot_infos && (
-          <UserSidebar
-            riotId={userProfile.riot_id}
-            tagline={userProfile.tagline}
-            riotInfos={userProfile.riot_infos}
-          />
-        )}
+        <UserSidebar
+          riotId={userProfile.riot_id}
+          tagline={userProfile.tagline}
+          riotInfos={userProfile.riot_infos}
+        />
         <div className={UserProfileStyles.content}>
-          {userProfile?.riot_infos && <UserInfos userProfile={userProfile} />}
+          <UserInfos userProfile={userProfile} />
           <Announces
             userId={userProfile?._id ?? ""}
             announces={userProfile?.announces ?? []}

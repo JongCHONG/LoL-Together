@@ -1,8 +1,9 @@
-import Menu from "../../components/Menu/Menu";
 import DashboardStyles from "./Dashboard.module.scss";
 
 import { useUser } from "../../contexts/UserContext";
-import Sidebar from "../../components/UserSidebar/UserSidebar";
+
+import Menu from "../../components/Menu/Menu";
+import UserSidebar from "../../components/UserSidebar/UserSidebar";
 import UserInfos from "../../components/UserInfos/UserInfos";
 import Announces from "../../components/Announces/Announces";
 
@@ -18,7 +19,7 @@ const Dashboard = () => {
         </h1>
       </div>
       <div className={DashboardStyles.container}>
-        <Sidebar
+        <UserSidebar
           riotId={currentUser?.riot_id}
           tagline={currentUser?.tagline}
           riotInfos={currentUser?.riot_infos}

@@ -71,20 +71,48 @@ export const fetchUserById = async (userId: string): Promise<User> => {
 export const updateUser = async (
   userId: string,
   data: any,
-  token?: string // optionnel si tu utilises l'auth
+  token?: string
 ) => {
-  const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: JSON.stringify(data),
-  });
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify(data),
+    });
 
-  if (!response.ok) {
-    throw new Error("Erreur lors de la mise à jour de l'utilisateur");
+    if (!response.ok) {
+      throw new Error("Erreur lors de la mise à jour de l'utilisateur");
+    }
+
+    return response.json();
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Impossible de se connecter au serveur");
+    }
+    throw error;
   }
+};
 
-  return response.json();
+export const deleteUser = async (userId: string, token?: string) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Erreur lors de la suppression de l'utilisateur");
+    }
+    return response.json();
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Impossible de se connecter au serveur");
+    }
+    throw error;
+  }
 };

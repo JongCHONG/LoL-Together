@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { useNavigate, useParams } from "react-router";
 
 import UserSidebarStyles from "./UserSidebar.module.scss";
 import CreateTeamModal from "../CreateTeamModal/CreateTeamModal";
 
 import defaultAvatar from "../../assets/default-avatar.png";
+import { useUser } from "../../contexts/UserContext";
 
 import { QueueType } from "../../utils/enums/queueType";
 import { RiotInfos, User } from "../../utils/types/api";
 import { getEmblemByTierRank } from "../../utils/helpers/getEmblemByTierRank";
 import { formatGameEndTime } from "../../utils/helpers/formatGameEndTime";
+import { deleteUser } from "../../utils/api/user";
+import { useAuth } from "../../utils/hooks/useAuth";
 
 interface SidebarProps {
   tagline?: User["tagline"];
@@ -17,7 +21,17 @@ interface SidebarProps {
 }
 
 const UserSidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
+  const { currentUser } = useUser();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
   const [open, setOpen] = useState<boolean>(false);
+
+  const handleDeleteAccount = useCallback(async () => {
+    await deleteUser(currentUser?._id || "");
+    logout();
+    navigate("/");
+  }, [currentUser?._id, navigate]);
 
   return (
     <>
@@ -75,12 +89,22 @@ const UserSidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
             </div>
           </div>
         )}
-        <button
-          className={UserSidebarStyles.createTeamButton}
-          onClick={() => setOpen(true)}
-        >
-          Créer une équipe
-        </button>
+        {!id && (
+          <>
+            <button
+              className={UserSidebarStyles.createTeamButton}
+              onClick={() => setOpen(true)}
+            >
+              Créer une équipe
+            </button>
+            <button
+              className={UserSidebarStyles.deleteAccountButton}
+              onClick={handleDeleteAccount}
+            >
+              Supprimer mon compte
+            </button>
+          </>
+        )}
       </div>
       <CreateTeamModal open={open} setOpen={setOpen} />
     </>
