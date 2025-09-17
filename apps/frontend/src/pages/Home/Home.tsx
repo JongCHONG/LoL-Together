@@ -43,7 +43,7 @@ const Home = () => {
           <div
             className={`${HomeStyles.carousel_item} ${HomeStyles.carousel_item_1}`}
           >
-            <div className={HomeStyles.card} style={{ marginRight: "250px" }}>
+            <div className={HomeStyles.card + " " + HomeStyles["card--right"]}>
               <div className={HomeStyles.title}>
                 Recrutes un joueur <br /> pour ton équipe.
               </div>
@@ -56,7 +56,7 @@ const Home = () => {
           <div
             className={`${HomeStyles.carousel_item} ${HomeStyles.carousel_item_2}`}
           >
-            <div className={HomeStyles.card} style={{ marginLeft: "250px" }}>
+            <div className={HomeStyles.card + " " + HomeStyles["card--left"]}>
               <div className={HomeStyles.title}>
                 Crées ton équipe <br />
                 et trouvez tes futurs coéquipiers.
@@ -70,7 +70,7 @@ const Home = () => {
           <div
             className={`${HomeStyles.carousel_item} ${HomeStyles.carousel_item_3}`}
           >
-            <div className={HomeStyles.card} style={{ marginRight: "250px" }}>
+            <div className={HomeStyles.card + " " + HomeStyles["card--right"]}>
               <div className={HomeStyles.title}>
                 Participe à des tournois <br /> et défie d'autres équipes.
               </div>
@@ -83,7 +83,7 @@ const Home = () => {
           <div
             className={`${HomeStyles.carousel_item} ${HomeStyles.carousel_item_4}`}
           >
-            <div className={HomeStyles.card} style={{ marginLeft: "250px" }}>
+            <div className={HomeStyles.card + " " + HomeStyles["card--left"]}>
               <div className={HomeStyles.title}>
                 Découvre des stratégies <br /> et progresse avec ta team.
               </div>

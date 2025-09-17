@@ -32,7 +32,7 @@
     background: url("../../assets/carousels/2-yasuo.png") no-repeat center
       center;
     background-size: cover;
-        display: flex;
+    display: flex;
     align-items: center;
     justify-content: flex-start;
   }
@@ -41,7 +41,7 @@
     background: url("../../assets/carousels/3-warwick.jpeg") no-repeat center
       center;
     background-size: cover;
-        display: flex;
+    display: flex;
     align-items: center;
     justify-content: flex-end;
   }
@@ -50,8 +50,70 @@
     background: url("../../assets/carousels/4-akali.jpg") no-repeat center
       center;
     background-size: cover;
-        display: flex;
+    display: flex;
     align-items: center;
     justify-content: flex-start;
+
+    @media (max-width: 600px) {
+      background-position: 70% center;
+    }
+  }
+}
+
+.card--right {
+  margin-right: 15vw;
+  @media (max-width: 1024px) {
+    margin-right: 5vw;
+  }
+  @media (max-width: 600px) {
+    margin-right: 0;
+  }
+}
+.card--left {
+  margin-left: 15vw;
+  @media (max-width: 1024px) {
+    margin-left: 5vw;
+  }
+  @media (max-width: 600px) {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .carousel {
+    .carousel_item {
+      .card {
+        .title {
+          font-size: 28px;
+        }
+        width: 60%;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel {
+    .carousel_item {
+      .card {
+        .title {
+          font-size: 22px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel {
+    .carousel_item {
+      .card {
+        .title {
+          font-size: 16px;
+        }
+        width: 60%;
+        margin: 0 20px;
+      }
+    }
   }
 }

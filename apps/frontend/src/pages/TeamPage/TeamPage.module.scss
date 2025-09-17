@@ -3,6 +3,9 @@
   background-size: cover;
   height: 60vh;
   position: relative;
+  @media (max-width: 600px) {
+    background-position: 70%;
+  }
 
   .title {
     font-size: 48px;
@@ -109,6 +112,36 @@
       font-size: 24px;
       color: white;
       font-family: "Merienda";
+    }
+  }
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    .content {
+      margin-left: 0;
+      margin-top: 20px;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .banner {
+    .title {
+      font-size: 32px;
+      width: 60%;
+      left: 50%;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .banner {
+    .title {
+      font-size: 22px;
+      width: 90%;
+      left: 50%;
+      padding: 0 10px;
     }
   }
 }

@@ -4,16 +4,16 @@ import ModalLayout from "../ModalLayout/ModalLayout";
 import { ModalProps } from "../../utils/types/modal";
 
 import CreateTeamModalStyles from "./CreateTeamModal.module.scss";
-import LanguagesSelect from "../CustomSelect/CustomSelect";
+import CustomSelect from "../CustomSelect/CustomSelect";
 import { useUser } from "../../contexts/UserContext";
 import { createTeam } from "../../utils/api/team";
 import { Team } from "../../utils/types/api";
 
 const initialValues = {
-  name: "Team",
-  description: "Test",
-  website: "http://website.com",
-  discord: "Test",
+  name: "",
+  description: "",
+  website: "",
+  discord: "",
   languages: [],
 };
 
@@ -60,7 +60,7 @@ const CreateTeamModal = ({ open, setOpen }: ModalProps) => {
                 required
               />
             </div>
-            <LanguagesSelect values={values} setFieldValue={setFieldValue} type={"languages"} />
+            <CustomSelect values={values} setFieldValue={setFieldValue} type={"languages"} />
             <div>
               <label
                 htmlFor="website"

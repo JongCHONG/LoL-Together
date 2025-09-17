@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import TeamSidebarStyles from "./TeamSidebar.module.scss";
@@ -8,6 +8,7 @@ import { Team } from "../../utils/types/api";
 import { useUser } from "../../contexts/UserContext";
 import { deleteTeam } from "../../utils/api/team";
 import { useAuth } from "../../utils/hooks/useAuth";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 interface TeamSidebarProps {
   id: string;
@@ -31,52 +32,64 @@ const TeamSidebar = ({
   const { currentUser } = useUser();
   const { token } = useAuth();
   const navigate = useNavigate();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const handleDeleteTeam = useCallback(async (id: string) => {
-    await deleteTeam(id, token ?? "");
-    navigate("/dashboard");
-  }, [token, navigate]);
+  const handleDeleteTeam = useCallback(
+    async (id: string) => {
+      await deleteTeam(id, token ?? "");
+      navigate("/dashboard");
+    },
+    [token, navigate]
+  );
 
   return (
-    <div className={TeamSidebarStyles.container}>
-      <div>
-        <img
-          className={TeamSidebarStyles.logo}
-          src={logo ?? defaultAvatar}
-          alt={`${name} logo`}
-        />
-      </div>
-      <div className={TeamSidebarStyles.info}>
-        <h3>{name}</h3>
-        {leader && (
-          <p className={TeamSidebarStyles.leader}>
-            Chef :
-            <Link
-              to={
-                currentUser && currentUser._id === leader._id
-                  ? `/dashboard`
-                  : `/user/${leader._id}`
-              }
-              className={TeamSidebarStyles.leaderLink}
-            >
-              {leader.riot_id || email}
-            </Link>
+    <>
+      <div className={TeamSidebarStyles.container}>
+        <div>
+          <img
+            className={TeamSidebarStyles.logo}
+            src={logo ?? defaultAvatar}
+            alt={`${name} logo`}
+          />
+        </div>
+        <div className={TeamSidebarStyles.info}>
+          <h3>{name}</h3>
+          {leader && (
+            <p className={TeamSidebarStyles.leader}>
+              Chef :
+              <Link
+                to={
+                  currentUser && currentUser._id === leader._id
+                    ? `/dashboard`
+                    : `/user/${leader._id}`
+                }
+                className={TeamSidebarStyles.leaderLink}
+              >
+                {leader.riot_id || email}
+              </Link>
+            </p>
+          )}
+          <p className={TeamSidebarStyles.createdAt}>
+            Crée le : {new Date(createdAt).toLocaleDateString()}
           </p>
-        )}
-        <p className={TeamSidebarStyles.createdAt}>
-          Crée le : {new Date(createdAt).toLocaleDateString()}
-        </p>
-        <p className={TeamSidebarStyles.userCount}>Membres : {userCount}</p>
-        {currentUser && currentUser._id === leader?._id && (
-          <button
-            className={TeamSidebarStyles.deleteTeamButton}
-            onClick={() => handleDeleteTeam(id)}
-          >
-            Supprimer mon équipe
-          </button>
-        )}
+          <p className={TeamSidebarStyles.userCount}>Membres : {userCount}</p>
+          {currentUser && currentUser._id === leader?._id && (
+            <button
+              className={TeamSidebarStyles.deleteTeamButton}
+              onClick={() => setShowConfirmModal(true)}
+            >
+              Supprimer mon équipe
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+      {showConfirmModal && (
+        <ConfirmModal
+          onDeleteTeam={() => handleDeleteTeam(id)}
+          onClose={() => setShowConfirmModal(false)}
+        />
+      )}
+    </>
   );
 };
 

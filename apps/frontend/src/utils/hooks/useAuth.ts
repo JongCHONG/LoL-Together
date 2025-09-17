@@ -26,7 +26,6 @@ export const useAuth = () => {
     const intervalId = setInterval(() => {
       const token = localStorage.getItem("authToken");
       if (token && isExpired(token)) {
-        console.log("Token expiré détecté");
         checkAuthStatus();
       }
     }, 60000);

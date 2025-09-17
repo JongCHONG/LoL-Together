@@ -77,3 +77,35 @@
     color: #23262f;
   }
 }
+
+@media (max-width: 600px) {
+  .modal_title {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .form_group {
+    gap: 6px;
+
+    .form_title {
+      font-size: 12px;
+    }
+
+    .form_field,
+    input,
+    select,
+    textarea {
+      font-size: 0.95rem;
+      padding: 8px 8px;
+    }
+
+    textarea {
+      min-height: 60px;
+    }
+
+    button[type="submit"] {
+      font-size: 1rem;
+      padding: 10px 0;
+    }
+  }
+}

@@ -25,7 +25,6 @@ const Teams = () => {
 
         const data = await fetchTeams();
         setTeams(data);
-        console.log("Équipes récupérées:", data);
       } catch (error) {
         console.error("Erreur lors du fetch:", error);
         setError(
@@ -41,9 +40,12 @@ const Teams = () => {
     loadTeams();
   }, []);
 
-  const handleContactClick = useCallback((teamId: string) => {
-    navigate(`/team/${teamId}`);
-  }, [navigate]);
+  const handleContactClick = useCallback(
+    (teamId: string) => {
+      navigate(`/team/${teamId}`);
+    },
+    [navigate]
+  );
 
   return (
     <>

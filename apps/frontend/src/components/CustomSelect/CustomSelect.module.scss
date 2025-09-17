@@ -10,3 +10,11 @@
     font-weight: 700;
   }
 }
+
+@media (max-width: 600px) {
+  .form_group {
+    .form_title {
+      font-size: 12px;
+    }
+  }
+}

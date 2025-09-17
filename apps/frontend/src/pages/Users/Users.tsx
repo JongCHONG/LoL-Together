@@ -25,7 +25,6 @@ const Users = () => {
 
         const data = await fetchUsers();
         setUsers(data);
-        console.log("Utilisateurs récupérés:", data);
       } catch (error) {
         console.error("Erreur lors du fetch:", error);
         setError(

@@ -1,9 +1,11 @@
 .banner {
-  background: url("../../assets/backgrounds/dashboard-thresh.jpeg")
-    no-repeat;
+  background: url("../../assets/backgrounds/dashboard-thresh.jpeg") no-repeat;
   background-size: cover;
   height: 60vh;
   position: relative;
+  @media (max-width: 600px) {
+    background-position: 50%;
+  }
 
   .title {
     font-size: 48px;
@@ -37,5 +39,35 @@
   .content {
     width: 100%;
     margin-left: 50px;
+  }
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    .content {
+      margin-left: 0;
+      margin-top: 20px;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .banner {
+    .title {
+      font-size: 32px;
+      width: 60%;
+      left: 50%;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .banner {
+    .title {
+      font-size: 22px;
+      width: 90%;
+      left: 50%;
+      padding: 0 10px;
+    }
   }
 }

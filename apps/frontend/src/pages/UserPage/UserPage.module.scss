@@ -1,6 +1,5 @@
 .banner {
-  background: url("../../assets/backgrounds/user-ahri.jpg")
-    no-repeat;
+  background: url("../../assets/backgrounds/user-ahri.jpg") no-repeat;
   background-size: cover;
   height: 60vh;
   position: relative;
@@ -37,5 +36,15 @@
   .content {
     width: 100%;
     margin-left: 50px;
+  }
+  
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    .content {
+      margin-left: 0;
+      margin-top: 20px;
+      width: 100%;
+    }
   }
 }

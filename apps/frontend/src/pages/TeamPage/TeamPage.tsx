@@ -65,8 +65,6 @@ const TeamPage = () => {
   if (!teamProfile) {
     return <div>Chargement du profil...</div>;
   }
-
-  console.log({ teamProfile });
   
   return (
     <>

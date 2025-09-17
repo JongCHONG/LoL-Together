@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 
 import UserSidebarStyles from "./UserSidebar.module.scss";
 import CreateTeamModal from "../CreateTeamModal/CreateTeamModal";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 import defaultAvatar from "../../assets/default-avatar.png";
 import { useUser } from "../../contexts/UserContext";
@@ -26,9 +27,11 @@ const UserSidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [open, setOpen] = useState<boolean>(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const handleDeleteAccount = useCallback(async () => {
     await deleteUser(currentUser?._id || "", token ?? "");
+    setShowConfirmModal(false);
     logout();
     navigate("/");
   }, [currentUser?._id, navigate]);
@@ -99,7 +102,7 @@ const UserSidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
             </button>
             <button
               className={UserSidebarStyles.deleteAccountButton}
-              onClick={handleDeleteAccount}
+              onClick={() => setShowConfirmModal(true)}
             >
               Supprimer mon compte
             </button>
@@ -107,6 +110,12 @@ const UserSidebar = ({ riotInfos, riotId, tagline }: SidebarProps) => {
         )}
       </div>
       <CreateTeamModal open={open} setOpen={setOpen} />
+      {showConfirmModal && (
+        <ConfirmModal
+          onDeleteAccount={handleDeleteAccount}
+          onClose={() => setShowConfirmModal(false)}
+        />
+      )}
     </>
   );
 };

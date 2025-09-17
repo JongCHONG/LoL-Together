@@ -1,4 +1,8 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   .content[data-tier="BRONZE"] {
     background-image: url("../../assets/banners/Bronze_Banner.png");
   }

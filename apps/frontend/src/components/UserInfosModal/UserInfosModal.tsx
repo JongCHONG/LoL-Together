@@ -58,7 +58,6 @@ const UserInfosModal = ({ open, setOpen }: ModalProps) => {
     <ModalLayout open={open} onClose={() => setOpen(false)}>
       <div className={ModalStyles.container}>
         <h3 className={ModalStyles.modal_title}>Modifier les informations</h3>
-        <p>Contenu de ton modal animé.</p>
 
         <Formik
           initialValues={{

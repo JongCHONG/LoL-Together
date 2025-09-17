@@ -32,9 +32,8 @@ const Register = () => {
           tagline: values.tagline,
         };
 
-        const data = await registerUser(credentials);
+        await registerUser(credentials);
 
-        console.log("Inscription réussie:", data);
         navigate("/login");
       } catch (error) {
         console.error("Erreur lors de l'inscription:", error);
